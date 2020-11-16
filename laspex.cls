@@ -1,28 +1,26 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{laspex}[2020/11/16]
 \LoadClass{report}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Packages and global stuff
-\RequirePackage[utf8]{inputenc} 
-\RequirePackage[swedish]{babel} 
-\RequirePackage{needspace}      % Provides commands to disable pagebreaking within a given vertical space.
-				                % If there is not enough space between the command and the bottom of 
-				                % the page, a new page will be started.
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{needspace}      % To manage page breaking
 \RequirePackage{ifthen}	        % Enables if's and else's
 % \RequirePackage{etoolbox}     % Funderar på att fasa ut ifthen mot etoolbox
 \RequirePackage{fancyhdr}
 \RequirePackage[yyyymmdd]{datetime}
-\RequirePackage[normalem]{ulem}         % Används för att betona vissa scenanvisningar
-\RequirePackage[flushmargin]{footmisc}  % Flushar till vänster för saker som står i sidfoten, tex. \dekor{*}
-\RequirePackage{fancybox,framed}        % Används för snygg musikbox: \doublebox{}
+\RequirePackage[normalem]{ulem}         % Provides styles for instructions
+\RequirePackage[flushmargin]{footmisc}  % Flushes content in page footer etc.
+\RequirePackage{fancybox,framed}        % Used for nice-looking music box
+\RequirePackage[swedish]{babel}
 \RequirePackage[a4paper,        % Calls the geometry package with nice specifications.
  left=1.9in,
  top=1in,
@@ -34,6 +32,19 @@
  marginparsep=0.2in,            % Distance between character and line.
  footskip=30pt
 ]{geometry}
+\DeclareOption{swedish}{%
+\RequirePackage[swedish]{babel}
+\RequirePackage[a4paper,        % Calls the geometry package with nice specifications.
+ left=1.9in,
+ top=1in,
+ headsep=0.15in,
+ bottom=2in,
+ bmargin=1in,
+ marginparwidth=1.1in,
+ textwidth=4.65in,
+ marginparsep=0.2in,            % Distance between character and line.
+ footskip=30pt
+]{geometry}}
 
 \setlength{\parindent}{0pt}     % Removes indents in the beginning of paragraphs
 \pagestyle{fancy}               % Enable headings
@@ -155,7 +166,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Kommandon för repliker och scenanvisningar 
+%%% Kommandon för repliker och scenanvisningar
 
 % Replik
 \newcommand{\replik}[1]{\vspace{2mm}\Needspace{24pt}%
@@ -208,7 +219,7 @@
 % Fortsätt scenanvisning på samma rad
 \newcommand{\scenanvisningforts}[1]{\ifthenelse{\kommentarbool=1}{\nopagebreak
 	{\textit{#1}}
-}{\ignorespaces}}  
+}{\ignorespaces}}
 % Kommentarer
 \newcommand{\kommentar}[1]{\ifthenelse{\kommentarbool=1}
 	{\nopagebreak\small$\langle$\emph{#1}$\rangle$}
@@ -340,10 +351,10 @@
     \hspace{0pt}% Important, otherwise vertical space is added!
     \everypar{\hangindent1em \hangafter1}% Keep hang indentation
     #1\end{minipage}}
-    
+
 % Definiera mittbord
 \newcommand{\mittbord}[1]{\hspace*{\fill}\begin{minipage}[t]{0.7\textwidth}%
     \hspace{0pt}% Important, otherwise vertical space is added!
     \centering#1\end{minipage}\hspace*{\fill}}
-    
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
