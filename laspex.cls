@@ -45,11 +45,16 @@
  marginparsep=0.2in,            % Distance between character and line.
  footskip=30pt
 ]{geometry}}
+% If book
+\newif\if@book
+\@bookfalse
+\DeclareOption{book}{\@booktrue}
+\ProcessOptions\relax
 
 \setlength{\parindent}{0pt}     % Removes indents in the beginning of paragraphs
 \pagestyle{fancy}               % Enable headings
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Options
 % Definiera option att ta bort scenhänvisningar
 \newcommand\kommentarbool{1}
@@ -63,7 +68,7 @@
 \ProcessOptions\relax
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Counters, counters are set to zero upon creation
 \newcounter{pagecounter_help}
 \newcounter{pagecounter_help2}
@@ -92,7 +97,7 @@
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Headers and footers
 \renewcommand{\headrulewidth}{0pt}  % Removes header horizontal line.
 
@@ -140,7 +145,7 @@
     }%
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Framsidan
 \newenvironment{framsida}{
     \newgeometry{left=1.5in,right=1.5in}
@@ -165,7 +170,7 @@
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Kommandon för repliker och scenanvisningar
 
 % Replik
@@ -231,9 +236,10 @@
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Musikbox
-%\musikbox{Titel}{Sångare}{Vad som händer}{Originaltitel}{Originalkompositör}{valbar undertitel}
+%\musikbox{Titel}{Sångare}{Vad som händer}{Originaltitel}{Originalkompositör}
+%                {valbar undertitel}
 \newcommand{\musikbox}[6]{
     \medskip%
     \doublebox{%
@@ -256,43 +262,43 @@
     }}%
 \medskip}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Scener och akter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Scenes and acts
 \newcommand{\aktfont}[1]{{\Large\bf{#1}}}
 \newcommand{\scenfont}[1]{\textbf{#1}}
 
-% Act/akt
+% Act
 \newcommand{\akt}[1]{%
     % To make line-breaking easier
-    \obeylines                  % A new line starts a new paragraph. Placed here because it doesn't work outside of a command
+    \obeylines              % A new line starts a new paragraph. Placed here
+                            % because it doesn't work outside of a command
     \ifthenelse{\value{aktcounter} > 0}%
     {\newpage}{\ignorespaces}   % Create new page if not first act.
     \vspace{2mm}%
     \stepcounter{aktcounter}%
     \setcounter{pagecounter_help}{\value{page}}%
     \setcounter{pagecounter_help2}{1}%
-    \mbox{%
-        \hspace{-\vreplik}\parbox[b]{\sepreplik}%
-        {\raggedright\aktfont{AKT \arabic{aktcounter}}}%
-        }\hspace{7pt}%
-    \aktfont{#1}%
+    \hspace{-\vreplik}\if@book\hfil\aktfont{AKT \arabic{aktcounter}}\hfil\else%
+    \parbox[b]{\sepreplik}%
+    {\raggedright\aktfont{AKT \arabic{aktcounter}}}\hspace{7pt}\fi%
+    \if@book\par\smallskip\hspace{-\vreplik}\hfill\aktfont{#1}\hfill\else\aktfont{#1}\fi%
     \value{scencounter} = 0% Reset scene counter
     \everypar{\hangindent1em\hangafter1}%
     \smallskip%
 }
 
-% Scene/scen
+% Scene
 \newcommand{\scen}[1]{%
     \Needspace{72pt}%
     % Increase scene counter and reset subscen counter
-    \enlinje%
+    \if@book\else\enlinje\fi%
     \stepcounter{scencounter}%
     \setcounter{subscencounter}{0}%
-    \mbox{%
-        \hspace{-\vreplik}\parbox[b]{\sepreplik}%
-        {\raggedright\scenfont{SCEN \arabic{aktcounter}.\arabic{scencounter}}}%
-        }\hspace{7pt}%
-    \scenfont{#1}% Scene name
+    \hspace{-\vreplik}\if@book \hrulefill\scenfont{SCEN \arabic{aktcounter}.\arabic{scencounter}}\hrulefill%
+    \par\smallskip\hspace{-\vreplik}\hfill\scenfont{#1}\hfill%
+    \else\parbox[b]{\sepreplik}%
+    {\raggedright\scenfont{SCEN \arabic{aktcounter}.\arabic{scencounter}}}\hspace{7pt}\scenfont{#1}% Scene name
+    \fi%
     \vspace{2mm}% Add extra vertical space after
 }
 
