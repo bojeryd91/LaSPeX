@@ -34,6 +34,7 @@
 
 \def\actprint{Act}
 \def\sceneprint{Scene}
+\def\pageprint{Page}
 
 % If Swedish
 \newif\if@swedish
@@ -70,7 +71,7 @@
 \newcounter{actcounter}
 \newcounter{scencounter}
 \setcounter{scencounter}{1}
-\newcounter{subscencounter}
+\newcounter{subscenecounter}
 \newcounter{paragraphsOnPage}[page]     % set to zero each time page is updated
 \newcounter{scenesOnPage}[paragraph]    % Try also scene
 
@@ -95,6 +96,7 @@
 \if@swedish%
 \def\actprint{Akt}%
 \def\sceneprint{Scen}%
+\def\pageprint{Sida}%
 \RequirePackage[swedish]{babel}\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -114,7 +116,7 @@
     \addtocounter{pagecounter_help2}{1}%
     \mbox{%
         \hspace{\marginparsep}\parbox[b]{20mm}%
-        {\scenfont{Sida \arabic{actcounter}.\arabic{pagecounter_help2}}}}%
+        {\scenfont{\pageprint{} \arabic{actcounter}.\arabic{pagecounter_help2}}}}%
     \hspace{-\marginparsep}\hspace{-20mm}%
 }
 \lhead{\footnotesize \bf{\actprint{} \theactcounter}}
@@ -249,7 +251,7 @@
         \hbox{\makebox[\musikboxl][c]{\Large\textbf{#1}}}%
         % Test if subtitle exists
         \settowidth{\tmpM}{#6}%
-        % If tmpl is empty, use subscencounter
+        % If tmpl is empty, use subscenecounter
         \ifthenelse{\lengthtest{\tmpM=0pt}}{}%
         {\hbox{\makebox[\musikboxl][c]{%
             \textbf{#6}%
@@ -293,10 +295,10 @@
     % Increase scene counter and reset subscen counter
     \if@book\else\enlinje\fi%
     \stepcounter{scencounter}%
-    \setcounter{subscencounter}{0}%
+    \setcounter{subscenecounter}{0}%
     \hspace{-\vreplik}%
     \if@book\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern2pt%
-        \scenfont{\uppercase{\sceneprint} \arabic{actcounter}.\arabic{scencounter}}%
+        \scenfont{\uppercase{\sceneprint} \arabic{actcounter}:\arabic{scencounter}}%
         \kern2pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern\z@%
         \par\smallskip\hspace{-\vreplik}\hfill\scenfont{#1}\hfill%
     \else\parbox[b]{\sepreplik}%
@@ -308,32 +310,34 @@
 % Subscene/subscen
 % First, no-star version
 \newcommand{\subscennostar}[2]{%
-    \Needspace{72pt}\enlinje%
+    \if@book\else\Needspace{72pt}\enlinje\fi%
     % If this is the first subscen (within
     % a scene), increase scencounter
-    \ifthenelse{\value{subscencounter} = 0}%
+    \ifthenelse{\value{subscenecounter} = 0}%
     {\stepcounter{scencounter}}{}%
-    \stepcounter{subscencounter}%
-    \mbox{%
-        \hspace{-\vreplik}\parbox[b]{\sepreplik}{%
-            \raggedright\scenfont{%
-                SCEN \arabic{actcounter}.\arabic{scencounter}%
-                % Set tmpl to width of #2
-                \settowidth{\tmpl}{#2}%
-                % If tmpl is empty, use subscencounter
-                \ifthenelse{\lengthtest{\tmpl=0pt}}%
-                % linebreak is to place linebreak if too wide.
-                {\alph{subscencounter}}{\linebreak[0]#2}%
-            }%
+    \stepcounter{subscenecounter}%
+    \hspace{-\vreplik}%
+    \if@book\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern2pt%
+        \scenfont{\uppercase{\sceneprint} \arabic{actcounter}:\arabic{scencounter}\alph{subscenecounter}}%
+        \kern2pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern\z@%
+        \par\smallskip\hspace{-\vreplik}\hfill\scenfont{#1}\hfill%
+    \else\parbox[b]{\sepreplik}{%
+        \raggedright\scenfont{%
+            SCEN \arabic{actcounter}.\arabic{scencounter}%
+            % Set tmpl to width of #2
+            \settowidth{\tmpl}{#2}%
+            % If tmpl is empty, use subscenecounter
+            \ifthenelse{\lengthtest{\tmpl=0pt}}%
+            % linebreak is to place linebreak if too wide.
+            {\alph{subscenecounter}}{\linebreak[0]#2}%
         }%
-    }\hspace{7pt}%
-    \scenfont{#1}%
+    }\hspace{7pt}\scenfont{#1}\fi%
     \vspace{2mm}%
 }
 % Starred version
 \newcommand{\subscenstar}[2]{
-    % If starred version, increment scencounter and reset subscencounter.
-    \setcounter{subscencounter}{0}%
+    % If starred version, increment scenecounter and reset subscenecounter.
+    \setcounter{subscenecounter}{0}%
     \subscennostar{#1}{#2}%
 }
 % Actually called command
@@ -344,10 +348,7 @@
 
 % Definierar en linje, används av \scen och \subscen
 \newcommand*{\enlinje}{
-    \vspace{2mm}
-    \cleaders\vbox to 0.4pt{\hrulefill}
-    \vskip0.4pt
-    \vspace{1mm}
+    \vspace{2mm}\cleaders\vbox to 0.4pt{\hrulefill}\vskip0.4pt\vspace{1mm}
 }
 
 % Definiera styrbord
