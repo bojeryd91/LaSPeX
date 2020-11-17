@@ -90,6 +90,7 @@
 \addtolength{\vreplik}{0.7in}
 \setlength{\sepreplik}{\vreplik}
 \addtolength{\sepreplik}{-0.1in}
+\if@book\addtolength{\musikboxl}{\vreplik}\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Language selection
@@ -243,6 +244,7 @@
 %\musikbox{Titel}{Sångare}{Vad som händer}{Originaltitel}{Originalkompositör}
 %                {valbar undertitel}
 \newcommand{\musikbox}[6]{
+    \if@book\hspace{-\vreplik}\fi%
     \medskip%
     \doublebox{%
     \vbox{%
