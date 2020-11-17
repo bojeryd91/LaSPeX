@@ -44,7 +44,8 @@
  textwidth=4.65in,
  marginparsep=0.2in,            % Distance between character and line.
  footskip=30pt
-]{geometry}}
+]{geometry}
+}
 % If book
 \newif\if@book
 \@bookfalse
@@ -72,7 +73,7 @@
 %%% Counters, counters are set to zero upon creation
 \newcounter{pagecounter_help}
 \newcounter{pagecounter_help2}
-\newcounter{aktcounter}
+\newcounter{actcounter}
 \newcounter{scencounter}
 \setcounter{scencounter}{1}
 \newcounter{subscencounter}
@@ -114,10 +115,10 @@
     \addtocounter{pagecounter_help2}{1}%
     \mbox{%
         \hspace{\marginparsep}\parbox[b]{20mm}%
-        {\scenfont{Sida \arabic{aktcounter}.\arabic{pagecounter_help2}}}}%
+        {\scenfont{Sida \arabic{actcounter}.\arabic{pagecounter_help2}}}}%
     \hspace{-\marginparsep}\hspace{-20mm}%
 }
-\lhead{\footnotesize \bf{Akt \theaktcounter}}
+\lhead{\footnotesize \bf{Act \theactcounter}}
 \lfoot{\footnotesize Utskrift: \today, kl. \currenttime}
 
 %%% Front page header and footer
@@ -264,29 +265,29 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Scenes and acts
-\newcommand{\aktfont}[1]{{\Large\bf{#1}}}
+\newcommand{\actfont}[1]{{\Large\bf{#1}}}
 \newcommand{\scenfont}[1]{\textbf{#1}}
 
 % Act
-\newcommand{\akt}[1]{%
+\newcommand{\act}[1]{%
     % To make line-breaking easier
     \obeylines              % A new line starts a new paragraph. Placed here
                             % because it doesn't work outside of a command
-    \ifthenelse{\value{aktcounter} > 0}%
+    \ifthenelse{\value{actcounter} > 0}%
     {\newpage}{\ignorespaces}   % Create new page if not first act.
     \vspace{2mm}%
-    \stepcounter{aktcounter}%
+    \stepcounter{actcounter}%
     \setcounter{pagecounter_help}{\value{page}}%
     \setcounter{pagecounter_help2}{1}%
-    \hspace{-\vreplik}\if@book\hfil\aktfont{AKT \arabic{aktcounter}}\hfil\else%
+    \hspace{-\vreplik}\if@book\hfil\actfont{ACT \arabic{actcounter}}\hfil\else%
     \parbox[b]{\sepreplik}%
-    {\raggedright\aktfont{AKT \arabic{aktcounter}}}\hspace{7pt}\fi%
-    \if@book\par\smallskip\hspace{-\vreplik}\hfill\aktfont{#1}\hfill\else\aktfont{#1}\fi%
+    {\raggedright\actfont{ACT \arabic{actcounter}}}\hspace{7pt}\fi%
+    \if@book\par\smallskip\hspace{-\vreplik}\hfill\actfont{#1}\hfill\else\actfont{#1}\fi%
     \value{scencounter} = 0% Reset scene counter
     \everypar{\hangindent1em\hangafter1}%
     \smallskip%
 }
-
+\newcommand{\akt}[1]{\act{#1}}
 % Scene
 \newcommand{\scen}[1]{%
     \Needspace{72pt}%
@@ -294,10 +295,13 @@
     \if@book\else\enlinje\fi%
     \stepcounter{scencounter}%
     \setcounter{subscencounter}{0}%
-    \hspace{-\vreplik}\if@book \hrulefill\scenfont{SCEN \arabic{aktcounter}.\arabic{scencounter}}\hrulefill%
-    \par\smallskip\hspace{-\vreplik}\hfill\scenfont{#1}\hfill%
+    \hspace{-\vreplik}%
+    \if@book\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern2pt%
+        \scenfont{SCEN \arabic{actcounter}.\arabic{scencounter}}%
+        \kern2pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern\z@%
+        \par\smallskip\hspace{-\vreplik}\hfill\scenfont{#1}\hfill%
     \else\parbox[b]{\sepreplik}%
-    {\raggedright\scenfont{SCEN \arabic{aktcounter}.\arabic{scencounter}}}\hspace{7pt}\scenfont{#1}% Scene name
+    {\raggedright\scenfont{SCEN \arabic{actcounter}.\arabic{scencounter}}}\hspace{7pt}\scenfont{#1}% Scene name
     \fi%
     \vspace{2mm}% Add extra vertical space after
 }
@@ -314,7 +318,7 @@
     \mbox{%
         \hspace{-\vreplik}\parbox[b]{\sepreplik}{%
             \raggedright\scenfont{%
-                SCEN \arabic{aktcounter}.\arabic{scencounter}%
+                SCEN \arabic{actcounter}.\arabic{scencounter}%
                 % Set tmpl to width of #2
                 \settowidth{\tmpl}{#2}%
                 % If tmpl is empty, use subscencounter
