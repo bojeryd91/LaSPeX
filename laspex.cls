@@ -31,11 +31,15 @@
  marginparsep=0.2in,            % Distance between character and line.
  footskip=30pt
 ]{geometry}
+
+\def\actprint{Act}
+\def\sceneprint{Scene}
+
 % If Swedish
 \newif\if@swedish
 \@swedishfalse
-%\DeclareOption{swedish}{?}
-\RequirePackage[swedish]{babel}
+\DeclareOption{swedish}{\@swedishtrue}
+
 % If book
 \newif\if@book
 \@bookfalse
@@ -58,7 +62,6 @@
 
 \setlength{\parindent}{0pt}     % Removes indents in the beginning of paragraphs
 \pagestyle{fancy}               % Enable headings
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Counters, counters are set to zero upon creation
@@ -87,7 +90,12 @@
 \setlength{\sepreplik}{\vreplik}
 \addtolength{\sepreplik}{-0.1in}
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Language selection
+\if@swedish%
+\def\actprint{Akt}%
+\def\sceneprint{Scen}%
+\RequirePackage[swedish]{babel}\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Headers and footers
@@ -109,7 +117,7 @@
         {\scenfont{Sida \arabic{actcounter}.\arabic{pagecounter_help2}}}}%
     \hspace{-\marginparsep}\hspace{-20mm}%
 }
-\lhead{\footnotesize \bf{Act \theactcounter}}
+\lhead{\footnotesize \bf{\actprint{} \theactcounter}}
 \lfoot{\footnotesize Utskrift: \today, kl. \currenttime}
 
 %%% Front page header and footer
@@ -270,9 +278,9 @@
     \stepcounter{actcounter}%
     \setcounter{pagecounter_help}{\value{page}}%
     \setcounter{pagecounter_help2}{1}%
-    \hspace{-\vreplik}\if@book\hfil\actfont{Akt \arabic{actcounter}}\hfil\else%
+    \hspace{-\vreplik}\if@book\hfil\actfont{\actprint{} \arabic{actcounter}}\hfil\else%
     \parbox[b]{\sepreplik}%
-    {\raggedright\actfont{ACT \arabic{actcounter}}}\hspace{7pt}\fi%
+    {\raggedright\actfont{\uppercase{\actprint{}} \arabic{actcounter}}}\hspace{7pt}\fi%
     \if@book\par\smallskip\hspace{-\vreplik}\hfill\actfont{#1}\hfill\else\actfont{#1}\fi%
     \value{scencounter} = 0% Reset scene counter
     \everypar{\hangindent1em\hangafter1}%
@@ -288,11 +296,11 @@
     \setcounter{subscencounter}{0}%
     \hspace{-\vreplik}%
     \if@book\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern2pt%
-        \scenfont{SCEN \arabic{actcounter}.\arabic{scencounter}}%
+        \scenfont{\uppercase{\sceneprint} \arabic{actcounter}.\arabic{scencounter}}%
         \kern2pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern\z@%
         \par\smallskip\hspace{-\vreplik}\hfill\scenfont{#1}\hfill%
     \else\parbox[b]{\sepreplik}%
-    {\raggedright\scenfont{SCEN \arabic{actcounter}.\arabic{scencounter}}}\hspace{7pt}\scenfont{#1}% Scene name
+    {\raggedright\scenfont{\uppercase{\sceneprint} \arabic{actcounter}.\arabic{scencounter}}}\hspace{7pt}\scenfont{#1}% Scene name
     \fi%
     \vspace{2mm}% Add extra vertical space after
 }
