@@ -259,13 +259,9 @@
         \hbox{\parbox[t]{0.8\musicboxl}{\small #2}}%
         \medskip%
         \hbox{\makebox[\musicboxl][c]{\Large\textbf{#1}}}%
-        % Test if subtitle exists
-        \settowidth{\tmpM}{#6}%
+        \settowidth{\tmpM}{#6}% Test if subtitle exists
         % If tmpl is empty, use subscenecounter
-        \ifthenelse{\lengthtest{\tmpM=0pt}}{}%
-        {\hbox{\makebox[\musicboxl][c]{%
-            \textbf{#6}%
-        }}}%
+        \ifnum\tmpM>0\smallskip\hbox{\makebox[\musicboxl][c]{\textbf{#6}}}\fi
         \smallskip%
         \hbox{\makebox[\musicboxl][c]{(\emph{#4/#5})}}%
         \medskip%                       % Space between composer and what the song is about.
