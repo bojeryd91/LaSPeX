@@ -260,11 +260,10 @@
         \medskip%
         \hbox{\makebox[\musicboxl][c]{\Large\textbf{#1}}}%
         \settowidth{\tmpM}{#6}% Test if subtitle exists
-        % If tmpl is empty, use subscenecounter
         \ifnum\tmpM>0\smallskip\hbox{\makebox[\musicboxl][c]{\textbf{#6}}}\fi
         \smallskip%
         \hbox{\makebox[\musicboxl][c]{(\emph{#4/#5})}}%
-        \medskip%                       % Space between composer and what the song is about.
+        \medskip%
         \hbox{\parbox[t]{0.96\musicboxl}%
             {\textit{\small #3}}}%
     }}%
@@ -281,8 +280,8 @@
     % To make line-breaking easier
     \obeylines              % A new line starts a new paragraph. Placed here
                             % because it doesn't work outside of a command
-    \ifthenelse{\value{actcounter} > 0}%
-    {\newpage}{\ignorespaces}   % Create new page if not first act.
+    % Create new page if not first act
+    \ifnum\value{actcounter}>0 \newpage\else\ignorespaces\fi%
     \vspace{2mm}%
     \stepcounter{actcounter}%
     \setcounter{pagecounter_help}{\value{page}}%
