@@ -50,7 +50,7 @@
 
 % If option on
 \DeclareOption{swedish}{\@swedishtrue}
-\DeclareOption{book}{\@booktrue}
+\DeclareOption{book}{\@booktrue\@twosidetrue}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Options
@@ -107,7 +107,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Headers and footers
-\renewcommand{\headrulewidth}{0pt}  % Removes header horizontal line.
+\if@book\else\renewcommand{\headrulewidth}{0pt}\fi% Removes header horizontal line.
 
 %%% Common header and footer
 \fancyhf{}
@@ -125,13 +125,17 @@
         {\scenfont{\pageprint{} \arabic{actcounter}.\arabic{pagecounter_help2}}}}%
     \hspace{-\marginparsep}\hspace{-20mm}%
 }
-\lhead{\footnotesize \bf{\actprint{} \theactcounter}}
+\lhead{\footnotesize\textbf{\actprint{} \theactcounter}}
+\if@book\fancyhf{}%
+        \fancyhead[RO]{\footnotesize\textbf{\korttitel{} \theactcounter:\thescencounter}}%
+        \fancyhead[LE]{\footnotesize\textbf{\spextitel{}}}\fi
 \lfoot{\footnotesize Utskrift: \today, kl. \currenttime}
 
 %%% Front page header and footer
 \fancypagestyle{framsida}{
     \def\SPeX{S\kern-.125em P\kern-.1667em \lower.5ex\hbox{E}\kern-.125em X}
     \def\LaSPeX{L\kern -.36em \raise.5ex\hbox{A}\kern -.15em\SPeX}
+    \renewcommand{\headrulewidth}{0pt}
     \fancyhf{}
     \lfoot{\footnotesize Utskrift: \today, kl. \currenttime}
     \rfoot{\footnotesize \parbox[b]{65mm}{Skrivet i Jesper \LaSPeX-mall,\\ klart inspirerat utav Grodans \SPeX-mall}}
