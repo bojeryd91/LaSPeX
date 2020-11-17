@@ -126,10 +126,14 @@
     \hspace{-\marginparsep}\hspace{-20mm}%
 }
 \lhead{\footnotesize\textbf{\actprint{} \theactcounter}}
-\if@book\fancyhf{}%
-        \fancyhead[RO]{\footnotesize\textbf{\korttitel{} \theactcounter:\thescencounter}}%
-        \fancyhead[LE]{\footnotesize\textbf{\spextitel{}}}\fi
 \lfoot{\footnotesize Utskrift: \today, kl. \currenttime}
+
+\if@book\fancyhf{}%
+        \fancyheadoffset[lh]{\vreplik}%
+        \fancyhead[RO]{\footnotesize\textbf{\korttitel{} \theactcounter:\thescencounter}}%
+        \fancyhead[LE]{\footnotesize\textbf{\spextitel{}}}%
+        \fancyfootoffset[lf]{\vreplik}%
+        \fancyfoot{\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern5pt\arabic{page}\kern5pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill}{\fi
 
 %%% Front page header and footer
 \fancypagestyle{framsida}{
@@ -137,15 +141,15 @@
     \def\LaSPeX{L\kern -.36em \raise.5ex\hbox{A}\kern -.15em\SPeX}
     \renewcommand{\headrulewidth}{0pt}
     \fancyhf{}
-    \lfoot{\footnotesize Utskrift: \today, kl. \currenttime}
-    \rfoot{\footnotesize \parbox[b]{65mm}{Skrivet i Jesper \LaSPeX-mall,\\ klart inspirerat utav Grodans \SPeX-mall}}
+    \if@book\else\lfoot{\footnotesize Utskrift: \today, kl. \currenttime}
+    \rfoot{\footnotesize \parbox[b]{65mm}{Skrivet i Jesper \LaSPeX-mall,\\ klart inspirerat utav Grodans \SPeX-mall}}\fi
 }
 
 %%% Character page header and footer
 \fancypagestyle{karaktarsida}{%
     \fancyhf{}%
     % Footer: print date
-    \lfoot{\footnotesize Utskrift: \today, kl. \currenttime}%
+    \if@book\else\lfoot{\footnotesize Utskrift: \today, kl. \currenttime}%
     % Header: print title
     \rhead{\footnotesize\textbf{\spextitel{}}%
         \settowidth{\tmpE}{\ellertitel{}}%
@@ -154,7 +158,7 @@
         % Print page number
         \mbox{\hspace{\marginparsep}\parbox[b]{20mm}{Sida \thepage}}%
         \hspace{-\marginparsep}\hspace{-20mm}%
-    }%
+    }\fi%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -168,8 +172,8 @@
     \ifthenelse{\lengthtest{\tmpE=0pt}}{}   % If tmpE is empty, do nothing. Else:
     {\bigskip                               % print out eller-title
     {\Large eller}\\
-    \huge{\ellertitel}}
-    \bigskip
+    \huge{\ellertitel}}%
+    \bigskip%
 }
 {\clearpage\setcounter{page}{1}}            % new page
 
