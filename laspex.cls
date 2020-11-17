@@ -320,7 +320,8 @@
 % Subscene/subscen
 % First, no-star version
 \newcommand{\subscennostar}[2]{%
-    \if@book\bigskip\else\Needspace{72pt}\enlinje\fi%
+    \if@book\bigskip\else\enlinje\fi%
+    \Needspace{72pt}%
     % If this is the first subscen (within
     % a scene), increase scencounter
     \ifthenelse{\value{subscenecounter} = 0}%
