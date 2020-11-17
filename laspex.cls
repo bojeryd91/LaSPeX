@@ -229,9 +229,7 @@
 %%% Dessa kan gömmas med valet utan-kommentarer i manus preamble:
 % Scenanvisning
 \newcommand{\scenanvisning}[1]{%
-    \if@comments%
-        \vspace{2mm}\Needspace{24pt}
-    	{\textit{#1}}%
+    \if@comments\vspace{2mm}\Needspace{24pt}{\textit{#1}}%
 	\else\ignorespaces\fi}
 % Fortsätt scenanvisning på samma rad
 \newcommand{\scenanvisningforts}[1]{%
@@ -301,14 +299,14 @@
 \newcommand{\scen}[1]{%
     \Needspace{72pt}%
     % Increase scene counter and reset subscen counter
-    \if@book\else\enlinje\fi%
+    \if@book\bigskip\else\enlinje\fi%
     \stepcounter{scencounter}%
     \setcounter{subscenecounter}{0}%
     \hspace{-\vreplik}%
-    \if@book\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern2pt%
-        \scenfont{\uppercase{\sceneprint} \arabic{actcounter}:\arabic{scencounter}}%
-        \kern2pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern\z@%
-        \par\smallskip\hspace{-\vreplik}\hfill\scenfont{#1}\hfill%
+    \if@book\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern5pt%
+        \scenfont{\large\uppercase{\sceneprint} \arabic{actcounter}:\arabic{scencounter}}%
+        \kern5pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern\z@%
+        \par\smallskip\hspace{-\vreplik}\hfill\scenfont{\large#1}\hfill%
     \else\parbox[b]{\sepreplik}%
     {\raggedright\scenfont{\uppercase{\sceneprint} \arabic{actcounter}.\arabic{scencounter}}}\hspace{7pt}\scenfont{#1}% Scene name
     \fi%
@@ -318,17 +316,17 @@
 % Subscene/subscen
 % First, no-star version
 \newcommand{\subscennostar}[2]{%
-    \if@book\else\Needspace{72pt}\enlinje\fi%
+    \if@book\bigskip\else\Needspace{72pt}\enlinje\fi%
     % If this is the first subscen (within
     % a scene), increase scencounter
     \ifthenelse{\value{subscenecounter} = 0}%
     {\stepcounter{scencounter}}{}%
     \stepcounter{subscenecounter}%
     \hspace{-\vreplik}%
-    \if@book\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern2pt%
-        \scenfont{\uppercase{\sceneprint} \arabic{actcounter}:\arabic{scencounter}\alph{subscenecounter}}%
-        \kern2pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern\z@%
-        \par\smallskip\hspace{-\vreplik}\hfill\scenfont{#1}\hfill%
+    \if@book\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern5pt%
+        \scenfont{\large\uppercase{\sceneprint} \arabic{actcounter}:\arabic{scencounter}\alph{subscenecounter}}%
+        \kern5pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern\z@%
+        \par\smallskip\hspace{-\vreplik}\hfill\scenfont{\large#1}\hfill%
     \else\parbox[b]{\sepreplik}{%
         \raggedright\scenfont{%
             SCEN \arabic{actcounter}.\arabic{scencounter}%
