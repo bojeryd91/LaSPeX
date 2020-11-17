@@ -36,27 +36,32 @@
 \def\sceneprint{Scene}
 \def\pageprint{Page}
 
-% If Swedish
 \newif\if@swedish
-\@swedishfalse
-\DeclareOption{swedish}{\@swedishtrue}
-
-% If book
+\newif\if@comments
 \newif\if@book
+\newif\if@inspicio % Bool for stage mananger
+\newif\if@scenery
+
 \@bookfalse
+\@swedishfalse
+\@commentstrue
+\@inspiciotrue
+\@scenerytrue
+
+% If option on
+\DeclareOption{swedish}{\@swedishtrue}
 \DeclareOption{book}{\@booktrue}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Options
 % Definiera option att ta bort scenhänvisningar
-\newcommand\kommentarbool{1}
-\DeclareOption{utan-kommentarer}{\renewcommand{\kommentarbool}{0}}
-\DeclareOption{med-kommentarer}{\renewcommand{\kommentarbool}{1}}
+\DeclareOption{utan-kommentarer}{\@commentsfalse}
+\DeclareOption{med-kommentarer}{\@commentstrue}
 
 % Definiera option att ta bort in- och utgångar samt teknikinstruktioner
 \newcommand\teknikbool{1}
-\DeclareOption{utan-teknik}{\renewcommand{\teknikbool}{0}}
-\DeclareOption{med-teknik}{\renewcommand{\teknikbool}{1}}
+\DeclareOption{utan-teknik}{\renewcommand{\teknikbool}{1}\@sceneryfalse}
+\DeclareOption{med-teknik}{\renewcommand{\teknikbool}{1}\@scenerytrue}
 
 
 \ProcessOptions\relax
@@ -190,18 +195,20 @@
 \newcommand{\struket}[1]{\sout{#1}\marginpar{\normalsize{\texttt{Struket}}}}
 
 %%% In- och utgång samt rekvisita
+\newcommand{\stageInstruction}[2]{%
+        \if@scenery\vspace{2mm}\Needspace{24pt}{\uwave{#1}}%
+        \marginpar{\texttt{#2}}\else\ignorespaces\fi}
 % Ingång
-\newcommand{\ingang}[1]{\ifthenelse{\teknikbool=1}%
-    {{\vspace{2mm}\Needspace{24pt}{\uwave{#1}}}
-        \marginpar{\texttt{Ingång}}}{}}
+\newcommand{\ingang}[1]{\stageInstruction{#1}{Ingång}}
 % Utgång
-\newcommand{\utgang}[1]{\ifthenelse{\teknikbool=1}%
-    {{\vspace{2mm}\Needspace{24pt}{\uwave{#1}}}
-        \marginpar{\texttt{Utgång}}}{}}
+\newcommand{\utgang}[1]{\stageInstruction{#1}{Utgång}}
 % Dekor, rekvisita och teknik
-\newcommand{\dekor}[1]{\margintext{Dekor}{#1}}
-\newcommand{\rekvisita}[1]{\margintext{Rekvisita}{#1}}
-\newcommand{\teknik}[1]{\margintext{Teknik}{#1}}
+\newcommand{\dekor}[1]{%
+    \if@scenery\margintext{Dekor}{#1}\else\ignorespaces\fi}
+\newcommand{\rekvisita}[1]{%
+    \if@scenery\margintext{Rekvisita}{#1}\else\ignorespaces\fi}
+\newcommand{\teknik}[1]{%
+    \if@scenery\margintext{Teknik}{#1}\else\ignorespaces\fi}
 
 % För beskrivning i sidfot till \dekor, \rekvisita, \teknik
 \newcommand{\margintext}[2]{\ifthenelse{\teknikbool=1}%
@@ -221,17 +228,18 @@
 %%% Scenanvisningar och kommentarer
 %%% Dessa kan gömmas med valet utan-kommentarer i manus preamble:
 % Scenanvisning
-\newcommand{\scenanvisning}[1]{\ifthenelse{\kommentarbool=1} {\vspace{2mm}\Needspace{24pt}
-	{\textit{#1}}
-}{\ignorespaces}}
+\newcommand{\scenanvisning}[1]{%
+    \if@comments%
+        \vspace{2mm}\Needspace{24pt}
+    	{\textit{#1}}%
+	\else\ignorespaces\fi}
 % Fortsätt scenanvisning på samma rad
-\newcommand{\scenanvisningforts}[1]{\ifthenelse{\kommentarbool=1}{\nopagebreak
-	{\textit{#1}}
-}{\ignorespaces}}
+\newcommand{\scenanvisningforts}[1]{%
+    \if@comments\nopagebreak{\textit{#1}}\else\ignorespaces\fi}
 % Kommentarer
-\newcommand{\kommentar}[1]{\ifthenelse{\kommentarbool=1}
-	{\nopagebreak\small$\langle$\emph{#1}$\rangle$}
-    {\ignorespaces}}                % If else, nothing (but ignore the space character)
+\newcommand{\kommentar}[1]{%
+    \if@comments\nopagebreak\small$\langle$\emph{#1}$\rangle$%
+    \else\ignorespaces\fi} % If else, nothing (but ignore the space character)
 % Hur
 \newcommand{\hur}[1]{\kommentar{#1:}}
 % Till:
@@ -240,12 +248,12 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% musicbox
+%%% music box
 %\musicbox{Title}{Singer}{What happens in the song}{Original
 %           title}{Original composer}{Optional subtitle}
 \newcommand{\musicbox}[6]{
-    \if@book\hspace{-\vreplik}\fi%
     \medskip%
+    \if@book\hspace{-\vreplik}\fi%
     \doublebox{%
     \vbox{%
         \hbox{\parbox[t]{0.8\musicboxl}{\small #2}}%
