@@ -79,9 +79,9 @@
 \newlength{\tmpl}                       % For subscenes
 \newlength{\tmpM}                       % For subtitle music
 \newlength{\tmpE}                       % For eller-title
-\newlength{\musikboxl}
-\setlength{\musikboxl}{\textwidth}
-\addtolength{\musikboxl}{-10pt}
+\newlength{\musicboxl}
+\setlength{\musicboxl}{\textwidth}
+\addtolength{\musicboxl}{-10pt}
 
 \newlength{\sepreplik}                  % Till repliker
 \newlength{\vreplik}
@@ -90,7 +90,7 @@
 \addtolength{\vreplik}{0.7in}
 \setlength{\sepreplik}{\vreplik}
 \addtolength{\sepreplik}{-0.1in}
-\if@book\addtolength{\musikboxl}{\vreplik}\fi
+\if@book\addtolength{\musicboxl}{\vreplik}\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Language selection
@@ -240,31 +240,32 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Musikbox
-%\musikbox{Titel}{Sångare}{Vad som händer}{Originaltitel}{Originalkompositör}
-%                {valbar undertitel}
-\newcommand{\musikbox}[6]{
+%%% musicbox
+%\musicbox{Title}{Singer}{What happens in the song}{Original
+%           title}{Original composer}{Optional subtitle}
+\newcommand{\musicbox}[6]{
     \if@book\hspace{-\vreplik}\fi%
     \medskip%
     \doublebox{%
     \vbox{%
-        \hbox{\parbox[t]{0.8\musikboxl}{\small #2}}%
+        \hbox{\parbox[t]{0.8\musicboxl}{\small #2}}%
         \medskip%
-        \hbox{\makebox[\musikboxl][c]{\Large\textbf{#1}}}%
+        \hbox{\makebox[\musicboxl][c]{\Large\textbf{#1}}}%
         % Test if subtitle exists
         \settowidth{\tmpM}{#6}%
         % If tmpl is empty, use subscenecounter
         \ifthenelse{\lengthtest{\tmpM=0pt}}{}%
-        {\hbox{\makebox[\musikboxl][c]{%
+        {\hbox{\makebox[\musicboxl][c]{%
             \textbf{#6}%
         }}}%
         \smallskip%
-        \hbox{\makebox[\musikboxl][c]{(\emph{#4/#5})}}%
+        \hbox{\makebox[\musicboxl][c]{(\emph{#4/#5})}}%
         \medskip%                       % Space between composer and what the song is about.
-        \hbox{\parbox[t]{0.96\musikboxl}%
+        \hbox{\parbox[t]{0.96\musicboxl}%
             {\textit{\small #3}}}%
     }}%
 \medskip}
+\newcommand{\musikbox}[6]{\musicbox{#1}{#2}{#3}{#4}{#5}{#6}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Scenes and acts
