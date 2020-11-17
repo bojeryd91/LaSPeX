@@ -7,8 +7,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{laspex}[2020/11/16]
-\LoadClass{report}
 
+\LoadClass{report}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Packages and global stuff
 \RequirePackage[utf8]{inputenc}
@@ -20,7 +20,6 @@
 \RequirePackage[normalem]{ulem}         % Provides styles for instructions
 \RequirePackage[flushmargin]{footmisc}  % Flushes content in page footer etc.
 \RequirePackage{fancybox,framed}        % Used for nice-looking music box
-\RequirePackage[swedish]{babel}
 \RequirePackage[a4paper,        % Calls the geometry package with nice specifications.
  left=1.9in,
  top=1in,
@@ -32,28 +31,15 @@
  marginparsep=0.2in,            % Distance between character and line.
  footskip=30pt
 ]{geometry}
-\DeclareOption{swedish}{%
+% If Swedish
+\newif\if@swedish
+\@swedishfalse
+%\DeclareOption{swedish}{?}
 \RequirePackage[swedish]{babel}
-\RequirePackage[a4paper,        % Calls the geometry package with nice specifications.
- left=1.9in,
- top=1in,
- headsep=0.15in,
- bottom=2in,
- bmargin=1in,
- marginparwidth=1.1in,
- textwidth=4.65in,
- marginparsep=0.2in,            % Distance between character and line.
- footskip=30pt
-]{geometry}
-}
 % If book
 \newif\if@book
 \@bookfalse
 \DeclareOption{book}{\@booktrue}
-\ProcessOptions\relax
-
-\setlength{\parindent}{0pt}     % Removes indents in the beginning of paragraphs
-\pagestyle{fancy}               % Enable headings
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Options
@@ -66,7 +52,12 @@
 \newcommand\teknikbool{1}
 \DeclareOption{utan-teknik}{\renewcommand{\teknikbool}{0}}
 \DeclareOption{med-teknik}{\renewcommand{\teknikbool}{1}}
+
+
 \ProcessOptions\relax
+
+\setlength{\parindent}{0pt}     % Removes indents in the beginning of paragraphs
+\pagestyle{fancy}               % Enable headings
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -279,7 +270,7 @@
     \stepcounter{actcounter}%
     \setcounter{pagecounter_help}{\value{page}}%
     \setcounter{pagecounter_help2}{1}%
-    \hspace{-\vreplik}\if@book\hfil\actfont{ACT \arabic{actcounter}}\hfil\else%
+    \hspace{-\vreplik}\if@book\hfil\actfont{Akt \arabic{actcounter}}\hfil\else%
     \parbox[b]{\sepreplik}%
     {\raggedright\actfont{ACT \arabic{actcounter}}}\hspace{7pt}\fi%
     \if@book\par\smallskip\hspace{-\vreplik}\hfill\actfont{#1}\hfill\else\actfont{#1}\fi%
