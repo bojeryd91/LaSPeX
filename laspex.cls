@@ -289,7 +289,9 @@
     \hspace{-\vreplik}\if@book\hfil\actfont{\actprint{} \arabic{actcounter}}\hfil\else%
     \parbox[b]{\sepreplik}%
     {\raggedright\actfont{\uppercase{\actprint{}} \arabic{actcounter}}}\hspace{7pt}\fi%
-    \if@book\par\smallskip\hspace{-\vreplik}\hfill\actfont{#1}\hfill\else\actfont{#1}\fi%
+    \settowidth{\tmpM}{#1}%
+    \ifnum\tmpM>0\if@book\par\medskip\hspace{-\vreplik}\hfill\actfont{#1}\hfill\else\actfont{#1}\fi%
+    \else\par\fi
     \value{scencounter} = 0% Reset scene counter
     \everypar{\hangindent1em\hangafter1}%
     \smallskip%
