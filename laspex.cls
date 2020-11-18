@@ -296,7 +296,7 @@
         \hbox{\makebox[\tempwidth][c]{\Large\bf{#1}}}%
         \settowidth{\tmpM}{#6}% Test if subtitle exists
         \ifnum\tmpM>0%
-            \smallskip\hbox{\makebox[\tempwidth][c]{\bf{#6}}}\fi
+            \smallskip\hbox{\makebox[\tempwidth][c]{#6}}\fi
         \smallskip%
         \hbox{\makebox[\tempwidth][c]{(\emph{#4/#5})}}%
         \medskip%
