@@ -19,7 +19,7 @@
 \RequirePackage[yyyymmdd]{datetime}
 \RequirePackage[normalem]{ulem}         % Provides styles for instructions
 \RequirePackage[flushmargin]{footmisc}  % Flushes content in page footer etc.
-\RequirePackage{fancybox,framed}        % Used for nice-looking music box
+\RequirePackage{fancybox}        % Used for nice-looking music box
 \RequirePackage{environ}
 
 \def\actprint{Act}
@@ -136,8 +136,7 @@
     \footnotesize\textbf{\spextitel{}}%
     \settowidth{\tmpE}{\ellertitel{}}%
     % If tmpE is empty, do nothing, otherwise, print out eller-title
-    \ifthenelse{\lengthtest{\tmpE=0pt}}{}%
-    {\textrm{ -- eller }\bf{\ellertitel}}%
+    \ifnum\tmpE>0\textrm{ -- eller }\bf{\ellertitel}\fi%
     \setcounter{pagecounter_help2}{\value{page}}%
     \addtocounter{pagecounter_help2}{-\value{pagecounter_help}}%
     \addtocounter{pagecounter_help2}{1}%
@@ -174,8 +173,7 @@
     % Header: print title
     \rhead{\footnotesize\textbf{\spextitel{}}%
         \settowidth{\tmpE}{\ellertitel{}}%
-        \ifthenelse{\lengthtest{\tmpE=0pt}}{\ignorespaces}%
-        {\textrm{ -- eller }\bf{\ellertitel}}%
+        \ifnum\tmpE>0\textrm{ -- eller}\bf{\ellertitel}\else\ignorespaces\fi%
         % Print page number
         \mbox{\hspace{\marginparsep}\parbox[b]{20mm}{Sida \thepage}}%
         \hspace{-\marginparsep}\hspace{-20mm}%
@@ -190,10 +188,9 @@
     \centering
     {\Huge\spextitel}\                      % Title
     \settowidth{\tmpE}{\ellertitel{}}
-    \ifthenelse{\lengthtest{\tmpE=0pt}}{}   % If tmpE is empty, do nothing. Else:
-    {\bigskip                               % print out eller-title
+    \ifnum\tmpE>0\bigskip                               % print out eller-title
     {\Large eller}\\
-    \huge{\ellertitel}}%
+    \huge{\ellertitel}\else\ignorespaces\fi%
     \bigskip%
 }
 {\clearpage\setcounter{page}{1}}            % new page
