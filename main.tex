@@ -3,8 +3,7 @@
 % "utan-kommentarer" har endast repliker, nummer, in- och utgångar.
 
 %\documentclass[utan-teknik,utan-kommentarer,swedish,book]{laspex}
-%\documentclass[med-teknik,utan-kommentarer,swedish]{laspex}
-%\documentclass[med-teknik,med-kommentarer,book]{laspex}
+%\documentclass[med-teknik,med-kommentarer,swedish]{laspex}
 \documentclass[med-teknik,med-kommentarer,book,swedish]{laspex}
 
 
@@ -532,6 +531,12 @@ Den kan vara långtråkig,
 \scenanvisning{\textbf{Det här är en beskrivning av saker som händer på scenen i mellanspelet och matchar med vad som händer på festen i akt 2.}} 
 \scenanvisning{Mellan 1.6 och 1.7: ljus som blinkar genom fönstren till slottet. Orkester-fest-musik.} 		
 \ingang{Vakten och bröderna Bacon in från porten.}
+
+\begin{onepage}
+Detta är ett exempel på en vänstersida i en spexbok. Med the environment \texttt{onepage} kan du lägga in text/material som ska flyta in på \textbf{en} egen sida i boken. Nedan jag har slängt in ett \texttt{$\backslash$vfill} samt random text för att illustrera att det trycks ned till botten av sidan.
+\vfill
+\blindtext[3]
+\end{onepage}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \scen{}

@@ -8,7 +8,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{laspex}[2020/11/16]
 
-\LoadClass{report}
+\LoadClass{article}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Packages and global stuff
 \RequirePackage[utf8]{inputenc}
@@ -20,17 +20,7 @@
 \RequirePackage[normalem]{ulem}         % Provides styles for instructions
 \RequirePackage[flushmargin]{footmisc}  % Flushes content in page footer etc.
 \RequirePackage{fancybox,framed}        % Used for nice-looking music box
-\RequirePackage[a4paper,        % Calls the geometry package with nice specifications.
- left=1.9in,
- top=1in,
- headsep=0.15in,
- bottom=2in,
- bmargin=1in,
- marginparwidth=1.1in,
- textwidth=4.65in,
- marginparsep=0.2in,            % Distance between character and line.
- footskip=30pt
-]{geometry}
+\RequirePackage{environ}
 
 \def\actprint{Act}
 \def\sceneprint{Scene}
@@ -66,6 +56,51 @@
 
 \ProcessOptions\relax
 
+%%% Important lengths
+\newlength{\musicboxl}
+\setlength{\musicboxl}{\textwidth}
+\addtolength{\musicboxl}{-10pt}
+\newlength{\sepreplik}                  % Till repliker
+\newlength{\vreplik}
+
+\if@book\setlength{\vreplik}{20mm}\else\setlength{\vreplik}{0.3in}
+\addtolength{\vreplik}{0.7in}\fi
+\setlength{\sepreplik}{\vreplik}
+\addtolength{\sepreplik}{-0.1in}
+
+\if@book\addtolength{\musicboxl}{\vreplik}\fi
+
+\newlength{\tempwidth}\setlength{\tempwidth}{133mm}\addtolength{\tempwidth}{-\vreplik}
+\newlength{\templeft}\setlength{\templeft}{18.5mm}\addtolength{\templeft}{\vreplik}
+
+\if@book\RequirePackage[a4paper,
+ textwidth=\tempwidth,
+ voffset=0mm,
+ textheight=185mm,
+ hoffset=0mm,
+ headsep=12pt,
+ paperheight=240mm,
+ footskip=26pt,
+ paperwidth=170mm,
+ left=\templeft,
+ top=26mm,
+% bottom=2in,
+% bmargin=1in,
+% marginparsep=0.2in,   % Distance between character and line.
+]{geometry}%
+\else\RequirePackage[a4paper,
+ left=1.9in,
+ top=1in,
+ headsep=0.15in,
+ bottom=2in,
+ bmargin=1in,
+ marginparwidth=1.1in,
+ textwidth=4.65in,
+ marginparsep=0.2in,            % Distance between character and line.
+ footskip=30pt
+]{geometry}\fi
+
+
 \setlength{\parindent}{0pt}     % Removes indents in the beginning of paragraphs
 \pagestyle{fancy}               % Enable headings
 
@@ -80,22 +115,10 @@
 \newcounter{paragraphsOnPage}[page]     % set to zero each time page is updated
 \newcounter{scenesOnPage}[paragraph]    % Try also scene
 
-%%% Lengths
+%%% Lengths (should be removed and defined when used)
 \newlength{\tmpl}                       % For subscenes
 \newlength{\tmpM}                       % For subtitle music
 \newlength{\tmpE}                       % For eller-title
-\newlength{\musicboxl}
-\setlength{\musicboxl}{\textwidth}
-\addtolength{\musicboxl}{-10pt}
-
-\newlength{\sepreplik}                  % Till repliker
-\newlength{\vreplik}
-
-\setlength{\vreplik}{0.3in}
-\addtolength{\vreplik}{0.7in}
-\setlength{\sepreplik}{\vreplik}
-\addtolength{\sepreplik}{-0.1in}
-\if@book\addtolength{\musicboxl}{\vreplik}\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Language selection
@@ -266,7 +289,8 @@
         \medskip%
         \hbox{\makebox[\musicboxl][c]{\Large\textbf{#1}}}%
         \settowidth{\tmpM}{#6}% Test if subtitle exists
-        \ifnum\tmpM>0\smallskip\hbox{\makebox[\musicboxl][c]{\textbf{#6}}}\fi
+        \ifnum\tmpM>0%
+            \smallskip\hbox{\makebox[\musicboxl][c]{\textbf{#6}}}\fi
         \smallskip%
         \hbox{\makebox[\musicboxl][c]{(\emph{#4/#5})}}%
         \medskip%
@@ -304,10 +328,9 @@
 }
 \newcommand{\akt}[1]{\act{#1}}
 % Scene
-\newcommand{\scen}[1]{%
-    \Needspace{72pt}%
-    % Increase scene counter and reset subscen counter
+\newcommand{\scene}[1]{%
     \if@book\bigskip\else\enlinje\fi%
+    \Needspace{72pt}%
     \stepcounter{scencounter}%
     \setcounter{subscenecounter}{0}%
     \hspace{-\vreplik}%
@@ -320,6 +343,7 @@
     \fi%
     \vspace{2mm}% Add extra vertical space after
 }
+\newcommand{\scen}[1]{\scene{#1}}
 
 % Subscene/subscen
 % First, no-star version
@@ -383,3 +407,9 @@
     \centering#1\end{minipage}\hspace*{\fill}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\tempwidth}{\textwidth}
+\addtolength{\tempwidth}{\vreplik}
+\NewEnviron{onepage}{%
+\begin{figure}[p]\hspace{-\vreplik}%
+\begin{minipage}[t][\textheight][t]{\tempwidth}\BODY%
+\end{minipage}\end{figure}}
