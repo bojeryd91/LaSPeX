@@ -49,9 +49,8 @@
 \DeclareOption{med-kommentarer}{\@commentstrue}
 
 % Definiera option att ta bort in- och utgångar samt teknikinstruktioner
-\newcommand\teknikbool{1}
-\DeclareOption{utan-teknik}{\renewcommand{\teknikbool}{1}\@sceneryfalse}
-\DeclareOption{med-teknik}{\renewcommand{\teknikbool}{1}\@scenerytrue}
+\DeclareOption{utan-teknik}{\@sceneryfalse}
+\DeclareOption{med-teknik}{\@scenerytrue}
 
 
 \ProcessOptions\relax
@@ -237,8 +236,8 @@
     \if@scenery\margintext{Teknik}{#1}\else\ignorespaces\fi}
 
 % För beskrivning i sidfot till \dekor, \rekvisita, \teknik
-\newcommand{\margintext}[2]{\ifthenelse{\teknikbool=1}%
-    {\marginpar{\texttt{#1}}%
+\newcommand{\margintext}[2]{\if@scenery%
+    \marginpar{\texttt{#1}}%
     \begingroup%
         \renewcommand\thefootnote{}\footnote{%
             \hspace{-0pt}%
@@ -248,7 +247,7 @@
             \hspace{7pt}#2%
         }%
         \addtocounter{footnote}{-1}
-    \endgroup}
+    \endgroup\else\ignorespaces\fi
 }
 
 %%% Scenanvisningar och kommentarer
