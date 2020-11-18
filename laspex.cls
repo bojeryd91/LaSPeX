@@ -142,7 +142,7 @@
 %%% Common header and footer
 \fancyhf{}
 \rhead{%
-    \footnotesize\textbf{\spextitel{}}%
+    \footnotesize\bf{\spextitel{}}%
     \settowidth{\tmpE}{\ellertitel{}}%
     % If tmpE is empty, do nothing, otherwise, print out eller-title
     \ifnum\tmpE>0\textrm{ -- eller }\bf{\ellertitel}\fi%
@@ -154,13 +154,13 @@
         {\scenfont{\pageprint{} \arabic{actcounter}.\arabic{pagecounter_help2}}}}%
     \hspace{-\marginparsep}\hspace{-20mm}%
 }
-\lhead{\footnotesize\textbf{\actprint{} \theactcounter}}
+\lhead{\footnotesize\bf{\actprint{} \theactcounter}}
 \lfoot{\footnotesize Utskrift: \today, kl. \currenttime}
 
 \if@book\fancyhf{}%
         \fancyheadoffset[lh]{\vreplik}%
-        \fancyhead[RO]{\footnotesize\textbf{\korttitel{} \theactcounter:\thescencounter}}%
-        \fancyhead[LE]{\footnotesize\textbf{\spextitel{}}}%
+        \fancyhead[RO]{\footnotesize\bf{\korttitel{} \theactcounter:\thescencounter}}%
+        \fancyhead[LE]{\footnotesize\bf{\spextitel{}}}%
         \fancyfootoffset[lf]{\vreplik}%
         \fancyfoot{\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern5pt\arabic{page}\kern5pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill}{\fi
 
@@ -178,7 +178,7 @@
 \fancypagestyle{karaktarsida}{%
     \fancyhf{}%
     \if@book\fancyheadoffset[lh]{0pt}\else\lfoot{\footnotesize Utskrift: \today, kl. \currenttime}%
-    \rhead{\footnotesize\textbf{\spextitel{}}%
+    \rhead{\footnotesize\bf{\spextitel{}}%
         \settowidth{\tmpE}{\ellertitel{}}%
         \ifnum\tmpE>0\textrm{ -- eller}\bf{\ellertitel}\else\ignorespaces\fi%
         % Print page number
@@ -220,7 +220,7 @@
 \newcommand{\replik}[1]{\vspace{2mm}\Needspace{24pt}%
     \hspace{-\vreplik}%
     \mbox{%
-        \parbox[b]{\sepreplik}{\raggedright\textbf{#1:}}}%
+        \parbox[b]{\sepreplik}{\raggedright\bf{#1:}}}%
         \hspace{7pt}\ignorespaces}%
 % Fortsätt replik
 \newcommand{\forts}{\vspace{2mm}\Needspace{24pt}\ignorespaces}
@@ -293,10 +293,10 @@
         \medskip%
         \setlength{\tempwidth}{\musicboxl}%
         \addtolength{\tempwidth}{-10pt}%
-        \hbox{\makebox[\tempwidth][c]{\Large\textbf{#1}}}%
+        \hbox{\makebox[\tempwidth][c]{\Large\bf{#1}}}%
         \settowidth{\tmpM}{#6}% Test if subtitle exists
         \ifnum\tmpM>0%
-            \smallskip\hbox{\makebox[\tempwidth][c]{\textbf{#6}}}\fi
+            \smallskip\hbox{\makebox[\tempwidth][c]{\bf{#6}}}\fi
         \smallskip%
         \hbox{\makebox[\tempwidth][c]{(\emph{#4/#5})}}%
         \medskip%
@@ -309,7 +309,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Scenes and acts
 \newcommand{\actfont}[1]{{\Large\bf{#1}}}
-\newcommand{\scenfont}[1]{\textbf{#1}}
+\newcommand{\scenfont}[1]{{\bf{#1}}}
 
 % Act
 \newcommand{\act}[1]{%
@@ -347,7 +347,7 @@
     \else\parbox[b]{\sepreplik}%
     {\raggedright\scenfont{\uppercase{\sceneprint} \arabic{actcounter}.\arabic{scencounter}}}\hspace{7pt}\scenfont{#1}% Scene name
     \fi%
-    \vspace{2mm}% Add extra vertical space after
+    \if@book\vspace{0mm}\else\vspace{2mm}\fi
 }
 \newcommand{\scen}[1]{\scene{#1}}
 
@@ -377,7 +377,7 @@
             {\alph{subscenecounter}}{\linebreak[0]#2}%
         }%
     }\hspace{7pt}\scenfont{#1}\fi%
-    \vspace{2mm}%
+    \if@book\vspace{0mm}\else\vspace{2mm}\fi
 }
 % Starred version
 \newcommand{\subscenstar}[2]{
