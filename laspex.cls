@@ -27,7 +27,7 @@
 \def\pageprint{Page}
 
 \newif\if@swedish
-\newif\if@comments
+\newif\if@instructions
 \newif\if@book
 \newif\if@inspicio % Bool for stage mananger
 \newif\if@scenery
@@ -36,7 +36,7 @@
 
 \@bookfalse
 \@swedishtrue
-\@commentstrue
+\@instructionstrue
 \@inspiciotrue
 \@scenerytrue
 \@onepagestrue
@@ -50,8 +50,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Options
 % Definiera option att ta bort scenhänvisningar
-\DeclareOption{utan-kommentarer}{\@commentsfalse}
-\DeclareOption{med-kommentarer}{\@commentstrue}
+\DeclareOption{utan-instruktioner}{\@instructionsfalse}
+\DeclareOption{med-instruktioner}{\@instructionstrue}
 
 % Definiera option att ta bort in- och utgångar samt teknikinstruktioner
 \DeclareOption{utan-teknik}{\@sceneryfalse}
@@ -261,17 +261,17 @@
 }
 
 %%% Scenanvisningar och kommentarer
-%%% Dessa kan gömmas med valet utan-kommentarer i manus preamble:
+%%% Dessa kan gömmas med valet utan-instruktioner i manus preamble:
 % Scenanvisning
 \newcommand{\scenanvisning}[1]{%
-    \if@comments\vspace{2mm}\Needspace{24pt}{\textit{#1}}%
+    \if@instructions\vspace{2mm}\Needspace{24pt}{\textit{#1}}%
 	\else\ignorespaces\fi}
 % Fortsätt scenanvisning på samma rad
 \newcommand{\scenanvisningforts}[1]{%
-    \if@comments\nopagebreak{\textit{#1}}\else\ignorespaces\fi}
+    \if@instructions\nopagebreak{\textit{#1}}\else\ignorespaces\fi}
 % Kommentarer
 \newcommand{\kommentar}[1]{%
-    \if@comments\nopagebreak\small$\langle$\emph{#1}$\rangle$%
+    \if@instructions\nopagebreak\small$\langle$\emph{#1}$\rangle$%
     \else\ignorespaces\fi} % If else, nothing (but ignore the space character)
 % Hur
 \newcommand{\hur}[1]{\kommentar{#1:}}
