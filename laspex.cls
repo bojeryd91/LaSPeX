@@ -271,7 +271,7 @@
     \if@instructions\nopagebreak{\textit{#1}}\else\ignorespaces\fi}
 % Kommentarer
 \newcommand{\kommentar}[1]{%
-    \if@instructions\nopagebreak\small$\langle$\emph{#1}$\rangle$%
+    \if@instructions\nopagebreak\small$\langle$\textit{#1}$\rangle$%
     \else\ignorespaces\fi} % If else, nothing (but ignore the space character)
 % Hur
 \newcommand{\hur}[1]{\kommentar{#1:}}
@@ -298,7 +298,7 @@
         \ifnum\tmpM>0%
             \smallskip\hbox{\makebox[\tempwidth][c]{#6}}\fi
         \smallskip%
-        \hbox{\makebox[\tempwidth][c]{(\emph{#4/#5})}}%
+        \hbox{\makebox[\tempwidth][c]{({\textit{#4/#5}})}}%
         \medskip%
         \hbox{\parbox[t]{\tempwidth}%
             {\textit{\small #3}}}%
