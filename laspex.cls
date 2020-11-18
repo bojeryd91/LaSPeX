@@ -57,9 +57,6 @@
 \ProcessOptions\relax
 
 %%% Important lengths
-\newlength{\musicboxl}
-\setlength{\musicboxl}{\textwidth}
-\addtolength{\musicboxl}{-10pt}
 \newlength{\sepreplik}                  % Till repliker
 \newlength{\vreplik}
 
@@ -67,8 +64,6 @@
 \addtolength{\vreplik}{0.7in}\fi
 \setlength{\sepreplik}{\vreplik}
 \addtolength{\sepreplik}{-0.1in}
-
-\if@book\addtolength{\musicboxl}{\vreplik}\fi
 
 \newlength{\tempwidth}\setlength{\tempwidth}{133mm}\addtolength{\tempwidth}{-\vreplik}
 \newlength{\templeft}\setlength{\templeft}{18.5mm}\addtolength{\templeft}{\vreplik}
@@ -100,6 +95,9 @@
  footskip=30pt
 ]{geometry}\fi
 
+\newlength{\musicboxl}
+\setlength{\musicboxl}{\textwidth}
+\if@book\addtolength{\musicboxl}{\vreplik}\fi
 
 \setlength{\parindent}{0pt}     % Removes indents in the beginning of paragraphs
 \pagestyle{fancy}               % Enable headings
@@ -115,7 +113,7 @@
 \newcounter{paragraphsOnPage}[page]     % set to zero each time page is updated
 \newcounter{scenesOnPage}[paragraph]    % Try also scene
 
-%%% Lengths (should be removed and defined when used)
+%%% Lengths (should be removed and defined when used?)
 \newlength{\tmpl}                       % For subscenes
 \newlength{\tmpM}                       % For subtitle music
 \newlength{\tmpE}                       % For eller-title
@@ -287,14 +285,16 @@
     \vbox{%
         \hbox{\parbox[t]{0.8\musicboxl}{\small #2}}%
         \medskip%
-        \hbox{\makebox[\musicboxl][c]{\Large\textbf{#1}}}%
+        \setlength{\tempwidth}{\musicboxl}%
+        \addtolength{\tempwidth}{-10pt}%
+        \hbox{\makebox[\tempwidth][c]{\Large\textbf{#1}}}%
         \settowidth{\tmpM}{#6}% Test if subtitle exists
         \ifnum\tmpM>0%
-            \smallskip\hbox{\makebox[\musicboxl][c]{\textbf{#6}}}\fi
+            \smallskip\hbox{\makebox[\tempwidth][c]{\textbf{#6}}}\fi
         \smallskip%
-        \hbox{\makebox[\musicboxl][c]{(\emph{#4/#5})}}%
+        \hbox{\makebox[\tempwidth][c]{(\emph{#4/#5})}}%
         \medskip%
-        \hbox{\parbox[t]{0.96\musicboxl}%
+        \hbox{\parbox[t]{\tempwidth}%
             {\textit{\small #3}}}%
     }}%
 \medskip}
