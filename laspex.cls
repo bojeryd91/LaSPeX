@@ -31,16 +31,21 @@
 \newif\if@book
 \newif\if@inspicio % Bool for stage mananger
 \newif\if@scenery
+\newif\if@onepages
+\newif\if@entrances
 
 \@bookfalse
-\@swedishfalse
+\@swedishtrue
 \@commentstrue
 \@inspiciotrue
 \@scenerytrue
+\@onepagestrue
+\@entrancestrue
 
 % If option on
+\DeclareOption{book}{\@booktrue\@twosidetrue\@sceneryfalse\@entrancesfalse}
 \DeclareOption{swedish}{\@swedishtrue}
-\DeclareOption{book}{\@booktrue\@twosidetrue}
+\DeclareOption{english}{\@swedishfalse}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Options
@@ -51,6 +56,11 @@
 % Definiera option att ta bort in- och utgångar samt teknikinstruktioner
 \DeclareOption{utan-teknik}{\@sceneryfalse}
 \DeclareOption{med-teknik}{\@scenerytrue}
+
+\DeclareOption{med-onepages}{\@onepagestrue}
+\DeclareOption{utan-onepages}{\@onepagesfalse}
+\DeclareOption{with-entrances}{\@entrancestrue}
+\DeclareOption{without-entrances}{\@entrancesfalse}
 
 
 \ProcessOptions\relax
@@ -221,7 +231,7 @@
 
 %%% In- och utgång samt rekvisita
 \newcommand{\stageInstruction}[2]{%
-        \if@scenery\vspace{2mm}\Needspace{24pt}{\uwave{#1}}%
+        \if@entrances\vspace{2mm}\Needspace{24pt}{\uwave{#1}}%
         \marginpar{\texttt{#2}}\else\ignorespaces\fi}
 % Ingång
 \newcommand{\ingang}[1]{\stageInstruction{#1}{Ingång}}
@@ -403,9 +413,12 @@
     \centering#1\end{minipage}\hspace*{\fill}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\setlength{\tempwidth}{\textwidth}
-\if@book\addtolength{\tempwidth}{\vreplik}\fi
+\makeatletter
 \NewEnviron{onepage}{%
-\begin{figure}[p]\if@book\hspace{-\vreplik}\fi%
+\if@onepages%
+\setlength{\tempwidth}{\textwidth}%
+\if@book\addtolength{\tempwidth}{\vreplik}\fi%
+\begin{figure}[p]\if@book\hspace{-\vreplik}\fi% 
 \begin{minipage}[t][\textheight][t]{\tempwidth}\BODY%
-\end{minipage}\end{figure}}
+\end{minipage}\end{figure}\else\ignorespaces\fi}
+\makeatother
