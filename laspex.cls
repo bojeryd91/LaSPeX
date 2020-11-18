@@ -168,9 +168,7 @@
 %%% Character page header and footer
 \fancypagestyle{karaktarsida}{%
     \fancyhf{}%
-    % Footer: print date
-    \if@book\else\lfoot{\footnotesize Utskrift: \today, kl. \currenttime}%
-    % Header: print title
+    \if@book\fancyheadoffset[lh]{0pt}\else\lfoot{\footnotesize Utskrift: \today, kl. \currenttime}%
     \rhead{\footnotesize\textbf{\spextitel{}}%
         \settowidth{\tmpE}{\ellertitel{}}%
         \ifnum\tmpE>0\textrm{ -- eller}\bf{\ellertitel}\else\ignorespaces\fi%
@@ -183,7 +181,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Framsidan
 \newenvironment{framsida}{
-    \newgeometry{left=1.5in,right=1.5in}
+    \if@book\newgeometry{left=18.5mm,right=18.5mm}%
+    \else\newgeometry{left=1.5in,right=1.5in}\fi
     \pagestyle{framsida}                    % Specifies header
     \centering
     {\Huge\spextitel}\                      % Title
@@ -197,6 +196,7 @@
 
 %%% Karaktärsidan/rollbeskrivning
 \newenvironment{karaktarsida}{
+    \if@book\newgeometry{left=18.5mm,right=18.5mm}\fi%
     \pagenumbering{roman}
     \pagestyle{karaktarsida}
 }
@@ -405,8 +405,8 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setlength{\tempwidth}{\textwidth}
-\addtolength{\tempwidth}{\vreplik}
+\if@book\addtolength{\tempwidth}{\vreplik}\fi
 \NewEnviron{onepage}{%
-\begin{figure}[p]\hspace{-\vreplik}%
+\begin{figure}[p]\if@book\hspace{-\vreplik}\fi%
 \begin{minipage}[t][\textheight][t]{\tempwidth}\BODY%
 \end{minipage}\end{figure}}
