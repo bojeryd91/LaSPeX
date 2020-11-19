@@ -156,7 +156,7 @@
     \addtocounter{pagecounter_help2}{1}%
     \mbox{%
         \hspace{\marginparsep}\parbox[b]{20mm}%
-        {\scenfont{\@pageprint \arabic{actcounter}.\arabic{pagecounter_help2}}}}%
+        {\headertext{\@pageprint{} \arabic{actcounter}.\arabic{pagecounter_help2}}}}%
     \hspace{-\marginparsep}\hspace{-20mm}%
 }
 \lhead{\footnotesize\bf{\@actprint{} \theactcounter}}
@@ -185,9 +185,9 @@
     \if@book\fancyheadoffset[lh]{0pt}\else\lfoot{\footnotesize Utskrift: \today, kl. \currenttime}%
     \rhead{\footnotesize\bf{\spextitel{}}%
         \settowidth{\tmpE}{\ellertitel{}}%
-        \ifnum\tmpE>0\textrm{ -- eller}\bf{\ellertitel}\else\ignorespaces\fi%
+        \ifnum\tmpE>0\textrm{ -- eller }\bf{\ellertitel}\else\ignorespaces\fi%
         % Print page number
-        \mbox{\hspace{\marginparsep}\parbox[b]{20mm}{Sida \thepage}}%
+        \mbox{\hspace{\marginparsep}\parbox[b]{20mm}{\@pageprint{} \thepage}}%
         \hspace{-\marginparsep}\hspace{-20mm}%
     }\fi%
 }
