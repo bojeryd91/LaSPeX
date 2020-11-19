@@ -22,9 +22,9 @@
 \RequirePackage{fancybox}        % Used for nice-looking music box
 \RequirePackage{environ}
 
-\def\actprint{Act}
-\def\sceneprint{Scene}
-\def\pageprint{Page}
+\def\@actprint{Act}
+\def\@sceneprint{Scene}
+\def\@pageprint{Page}
 
 \newif\if@swedish
 \newif\if@instructions
@@ -130,11 +130,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Language selection
 \if@swedish%
-\def\actprint{Akt}%
-\def\sceneprint{Scen}%
-\def\pageprint{Sida}%
+\def\@actprint{Akt}
+\def\@sceneprint{Scen}%
+\def\@pageprint{Sida}%
 \RequirePackage[swedish]{babel}\fi
 
+\newcommand{\actprint}{\expandafter\MakeUppercase\expandafter{\@actprint}}
+\newcommand{\sceneprint}{\expandafter\MakeUppercase\expandafter{\@sceneprint}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Headers and footers
 \if@book\else\renewcommand{\headrulewidth}{0pt}\fi% Removes header horizontal line.
@@ -154,10 +156,10 @@
     \addtocounter{pagecounter_help2}{1}%
     \mbox{%
         \hspace{\marginparsep}\parbox[b]{20mm}%
-        {\scenfont{\pageprint{} \arabic{actcounter}.\arabic{pagecounter_help2}}}}%
+        {\scenfont{\@pageprint \arabic{actcounter}.\arabic{pagecounter_help2}}}}%
     \hspace{-\marginparsep}\hspace{-20mm}%
 }
-\lhead{\footnotesize\bf{\actprint{} \theactcounter}}
+\lhead{\footnotesize\bf{\@actprint{} \theactcounter}}
 \lfoot{\footnotesize Utskrift: \today, kl. \currenttime}
 
 \if@book\fancyhf{}%
@@ -195,16 +197,25 @@
 \newenvironment{framsida}{
     \if@book\newgeometry{left=18.5mm,right=18.5mm}%
     \else\newgeometry{left=1.5in,right=1.5in}\fi
-    \pagestyle{framsida}                    % Specifies header
+    \pagestyle{framsida}
+    \if@book\bgroup\fi
     \centering
-    {\Huge\spextitel}\                      % Title
+    \if@book%
+        \font\titelfont=cmr10 scaled 2400%
+        \font\undertitelfont=cmbx10 scaled 1440%
+        {\titelfont\spextitel}\\ \bigskip%
+        {\bf eller}\\ \bigskip%
+        {\undertitelfont\ellertitel}%
+        \bigskip\bigskip\bigskip%
+        \par\egroup\medskip\ignorespaces\else%
+    {\Huge\spextitel}\\ %
     \settowidth{\tmpE}{\ellertitel{}}
-    \ifnum\tmpE>0\bigskip                               % print out eller-title
-    {\Large eller}\\
-    \huge{\ellertitel}\else\ignorespaces\fi%
-    \bigskip%
+    \ifnum\tmpE>0\bigskip%
+    {\Large eller}\\ \medskip%
+    {\huge\ellertitel}\else\ignorespaces\fi%
+    \bigskip\par\fi%
 }
-{\clearpage\setcounter{page}{1}}            % new page
+{\clearpage\setcounter{page}{1}}
 
 %%% Karaktärsidan/rollbeskrivning
 \newenvironment{karaktarsida}{
@@ -313,6 +324,8 @@
 %%% Scenes and acts
 \newcommand{\actfont}[1]{{\Large\bf{#1}}}
 \newcommand{\scenfont}[1]{{\bf{#1}}}
+\if@book\font\tmpactfont=cmbx10 scaled 1440%
+        \renewcommand{\actfont}[1]{{\tmpactfont#1}}\fi
 
 % Act
 \newcommand{\act}[1]{%
@@ -344,11 +357,11 @@
     \setcounter{subscenecounter}{0}%
     \hspace{-\vreplik}%
     \if@book\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern5pt%
-        \scenfont{\large\uppercase{\sceneprint} \arabic{actcounter}:\arabic{scencounter}}%
+        \scenfont{\large\uppercase{\sceneprint{}} \arabic{actcounter}:\arabic{scencounter}}%
         \kern5pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern\z@%
         \par\smallskip\hspace{-\vreplik}\hfill\scenfont{\large#1}\hfill%
     \else\parbox[b]{\sepreplik}%
-    {\raggedright\scenfont{\uppercase{\sceneprint} \arabic{actcounter}.\arabic{scencounter}}}\hspace{7pt}\scenfont{#1}% Scene name
+    {\raggedright\scenfont{\uppercase{\sceneprint{}} \arabic{actcounter}.\arabic{scencounter}}}\hspace{7pt}\scenfont{#1}% Scene name
     \fi%
     \if@book\vspace{0mm}\else\vspace{2mm}\fi
 }
@@ -366,7 +379,7 @@
     \stepcounter{subscenecounter}%
     \hspace{-\vreplik}%
     \if@book\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern5pt%
-        \scenfont{\large\uppercase{\sceneprint} \arabic{actcounter}:\arabic{scencounter}\alph{subscenecounter}}%
+        \scenfont{\large\uppercase{\sceneprint{}} \arabic{actcounter}:\arabic{scencounter}\alph{subscenecounter}}%
         \kern5pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern\z@%
         \par\smallskip\hspace{-\vreplik}\hfill\scenfont{\large#1}\hfill%
     \else\parbox[b]{\sepreplik}{%
