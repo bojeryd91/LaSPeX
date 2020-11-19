@@ -69,7 +69,7 @@
 \newlength{\sepreplik}                  % Till repliker
 \newlength{\vreplik}
 
-\if@book\setlength{\vreplik}{20mm}\else\setlength{\vreplik}{0.3in}
+\if@book\setlength{\vreplik}{28mm}\else\setlength{\vreplik}{0.3in}
 \addtolength{\vreplik}{0.7in}\fi
 \setlength{\sepreplik}{\vreplik}
 \addtolength{\sepreplik}{-0.1in}
@@ -84,7 +84,7 @@
  hoffset=0mm,
  headsep=12pt,
  paperheight=240mm,
- footskip=26pt,
+ footskip=28pt,
  paperwidth=170mm,
  left=\templeft,
  top=26mm,
@@ -231,10 +231,11 @@
 %%% Kommandon för repliker och scenanvisningar
 
 % Replik
-\newcommand{\replik}[1]{\vspace{2mm}\Needspace{24pt}%
+\newcommand{\replik}[1]{\if@book\vspace{1mm}\else\vspace{2mm}\fi\Needspace{24pt}%
     \hspace{-\vreplik}%
     \mbox{%
-        \parbox[b]{\sepreplik}{\raggedright\bf{#1:}}}%
+        \parbox[b]{\sepreplik}{\raggedright%
+            \if@book\else\bf\fi{#1:}}}%
         \hspace{7pt}\ignorespaces}%
 % Fortsätt replik
 \newcommand{\forts}{\vspace{2mm}\Needspace{24pt}\ignorespaces}
@@ -278,7 +279,7 @@
 %%% Dessa kan gömmas med valet utan-instruktioner i manus preamble:
 % Scenanvisning
 \newcommand{\scenanvisning}[1]{%
-    \if@instructions\vspace{2mm}\Needspace{24pt}{\textit{#1}}%
+    \if@instructions\if@book\vspace{1mm}\else\vspace{2mm}\fi\Needspace{24pt}{\textit{#1}}%
 	\else\ignorespaces\fi}
 % Fortsätt scenanvisning på samma rad
 \newcommand{\scenanvisningforts}[1]{%
@@ -286,7 +287,9 @@
 % Kommentarer
 \newcommand{\kommentar}[1]{%
     \if@instructions\nopagebreak\small$\langle$\textit{#1}$\rangle$%
-    \else\ignorespaces\fi} % If else, nothing (but ignore the space character)
+    \else\ignorespaces\fi}
+\if@book\renewcommand{\kommentar}[1]{%
+    \if@instructions\nopagebreak\small\textit{#1}\else\ignorespaces\fi}
 % Hur
 \newcommand{\hur}[1]{\kommentar{#1:}}
 % Till:
@@ -300,7 +303,6 @@
 %           title}{Original composer}{Optional subtitle}
 \newcommand{\musicbox}[6]{
     \medskip%
-    \if@book\hspace{-\vreplik}\fi%
     \doublebox{%
     \vbox{%
         \hbox{\parbox[t]{0.8\musicboxl}{\small #2}}%
@@ -318,6 +320,20 @@
             {\textit{\small #3}}}%
     }}%
 \medskip}
+\if@book\renewcommand{\musicbox}[6]{\bigskip%
+    \hspace{-\vreplik}\doublebox{%
+    \vbox{%
+        \bigskip
+        \setlength{\tempwidth}{\musicboxl}%
+        \addtolength{\tempwidth}{-10pt}%
+        \hbox{\makebox[\tempwidth][c]{\Large\bf{#1}}}%
+        \settowidth{\tmpM}{#6}% Test if subtitle exists
+        \ifnum\tmpM>0%
+            \smallskip\hbox{\makebox[\tempwidth][c]{#6}}\fi
+        \smallskip%
+        \hbox{\makebox[\tempwidth][c]{#2}}%
+        \bigskip%
+    }}\medskip}
 \newcommand{\musikbox}[6]{\musicbox{#1}{#2}{#3}{#4}{#5}{#6}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -357,9 +373,9 @@
     \setcounter{subscenecounter}{0}%
     \hspace{-\vreplik}%
     \if@book\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern5pt%
-        \scenfont{\large\uppercase{\sceneprint{}} \arabic{actcounter}:\arabic{scencounter}}%
+        \scenfont{\uppercase{\sceneprint{}} \arabic{actcounter}:\arabic{scencounter}}%
         \kern5pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern\z@%
-        \par\smallskip\hspace{-\vreplik}\hfill\scenfont{\large#1}\hfill%
+        \par\smallskip\hspace{-\vreplik}\hfill\scenfont{#1}\hfill%
     \else\parbox[b]{\sepreplik}%
     {\raggedright\scenfont{\uppercase{\sceneprint{}} \arabic{actcounter}.\arabic{scencounter}}}\hspace{7pt}\scenfont{#1}% Scene name
     \fi%
