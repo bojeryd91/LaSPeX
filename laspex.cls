@@ -139,13 +139,16 @@
 %%% Headers and footers
 \if@book\else\renewcommand{\headrulewidth}{0pt}\fi% Removes header horizontal line.
 
+\newcommand{\headertext}[1]{\bf{\footnotesize #1}}
+\if@book\font\eightbf=cmbx8\renewcommand{\headertext}[1]{{\eightbf #1}}\fi
+
 %%% Common header and footer
 \fancyhf{}
 \rhead{%
-    \footnotesize\bf{\spextitel{}}%
+    \headertext{\spextitel{}}%
     \settowidth{\tmpE}{\ellertitel{}}%
     % If tmpE is empty, do nothing, otherwise, print out eller-title
-    \ifnum\tmpE>0\textrm{ -- eller }\bf{\ellertitel}\fi%
+    \ifnum\tmpE>0\headertext{ -- eller \ellertitel}\fi%
     \setcounter{pagecounter_help2}{\value{page}}%
     \addtocounter{pagecounter_help2}{-\value{pagecounter_help}}%
     \addtocounter{pagecounter_help2}{1}%
