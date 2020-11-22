@@ -1,30 +1,7 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{laspex}[2020/11/16]
-
-\LoadClass{article}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Packages and global stuff
-\RequirePackage[utf8]{inputenc}
-\RequirePackage{needspace}      % To manage page breaking
-\RequirePackage{ifthen}	        % Enables if's and else's
-% \RequirePackage{etoolbox}     % Funderar på att fasa ut ifthen mot etoolbox
-\RequirePackage{fancyhdr}
-\RequirePackage[yyyymmdd]{datetime}
-\RequirePackage[normalem]{ulem}         % Provides styles for instructions
-\RequirePackage[flushmargin]{footmisc}  % Flushes content in page footer etc.
-\RequirePackage{fancybox}        % Used for nice-looking music box
-\RequirePackage{environ}
-
-\def\@actprint{Act}
-\def\@sceneprint{Scene}
-\def\@pageprint{Page}
 
 \newif\if@swedish
 \newif\if@instructions
@@ -62,30 +39,46 @@
 \DeclareOption{with-entrances}{\@entrancestrue}
 \DeclareOption{without-entrances}{\@entrancesfalse}
 
-
 \ProcessOptions\relax
+\if@book\LoadClass[10pt,twoside]{article}\else\LoadClass{articl}\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Packages and global stuff
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{needspace}      % To manage page breaking
+\RequirePackage{ifthen}	        % Enables if's and else's
+% \RequirePackage{etoolbox}     % Funderar på att fasa ut ifthen mot etoolbox
+\RequirePackage{fancyhdr}
+\RequirePackage[yyyymmdd]{datetime}
+\RequirePackage[normalem]{ulem}         % Provides styles for instructions
+\RequirePackage[flushmargin]{footmisc}  % Flushes content in page footer etc.
+\RequirePackage{fancybox}        % Used for nice-looking music box
+\RequirePackage{environ}
+
+\def\@actprint{Act}
+\def\@sceneprint{Scene}
+\def\@pageprint{Page}
 
 %%% Important lengths
 \newlength{\sepreplik}                  % Till repliker
 \newlength{\vreplik}
 
-\if@book\setlength{\vreplik}{28mm}\else\setlength{\vreplik}{0.3in}
-\addtolength{\vreplik}{0.7in}\fi
+\if@book\setlength{\vreplik}{29mm}\else\setlength{\vreplik}{1in}\fi
 \setlength{\sepreplik}{\vreplik}
 \addtolength{\sepreplik}{-0.1in}
 
 \newlength{\tempwidth}\setlength{\tempwidth}{133mm}\addtolength{\tempwidth}{-\vreplik}
 \newlength{\templeft}\setlength{\templeft}{18.5mm}\addtolength{\templeft}{\vreplik}
 
-\if@book\RequirePackage[a4paper,
+\if@book\RequirePackage[asymmetric,%
+ paperheight=240mm,
+ paperwidth=170mm,
+ textheight=185mm,
  textwidth=\tempwidth,
  voffset=0mm,
- textheight=185mm,
  hoffset=0mm,
  headsep=12pt,
- paperheight=240mm,
  footskip=28pt,
- paperwidth=170mm,
  left=\templeft,
  top=26mm,
 % bottom=2in,
@@ -167,7 +160,14 @@
         \fancyhead[RO]{\footnotesize\bf{\korttitel{} \theactcounter:\thescencounter}}%
         \fancyhead[LE]{\footnotesize\bf{\spextitel{}}}%
         \fancyfootoffset[lf]{\vreplik}%
-        \fancyfoot{\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern5pt\arabic{page}\kern5pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill}{\fi
+        \fancyfoot{\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern5pt\arabic{page}\kern5pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill}\fi
+
+%%% First page of act
+\fancypagestyle{firstPageOfAct}{
+    \fancyheadoffset[lh]{\vreplik}%
+    \fancyhead[RO]{\footnotesize\bf{\korttitel{} \theactcounter}}%
+    \fancyhead[LE]{\footnotesize\bf{\spextitel{}}}%
+}
 
 %%% Front page header and footer
 \fancypagestyle{framsida}{
@@ -225,8 +225,6 @@
 }
 {\clearpage}                                % new page
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Kommandon för repliker och scenanvisningar
 
@@ -279,17 +277,17 @@
 %%% Dessa kan gömmas med valet utan-instruktioner i manus preamble:
 % Scenanvisning
 \newcommand{\scenanvisning}[1]{%
-    \if@instructions\if@book\vspace{1mm}\else\vspace{2mm}\fi\Needspace{24pt}{\textit{#1}}%
-	\else\ignorespaces\fi}
+    \if@instructions\if@book\vspace{1mm}\bgroup\small\else\vspace{2mm}\fi\Needspace{24pt}{\textit{#1}}%
+	\else\ignorespaces\fi\if@book\egroup\fi}
 % Fortsätt scenanvisning på samma rad
 \newcommand{\scenanvisningforts}[1]{%
-    \if@instructions\nopagebreak{\textit{#1}}\else\ignorespaces\fi}
+    \if@instructions\nopagebreak\if@book\bgroup\small\fi{\textit{#1}}\if@book\egroup\fi\else\ignorespaces\fi}
 % Kommentarer
 \newcommand{\kommentar}[1]{%
-    \if@instructions\nopagebreak\small$\langle$\textit{#1}$\rangle$%
+    \if@instructions\nopagebreak$\langle$\textit{#1}$\rangle$%
     \else\ignorespaces\fi}
 \if@book\renewcommand{\kommentar}[1]{%
-    \if@instructions\nopagebreak\small\textit{#1}\else\ignorespaces\fi}
+    \if@instructions\nopagebreak{\small\textit{#1}}\else\ignorespaces\fi}
 % Hur
 \newcommand{\hur}[1]{\kommentar{#1:}}
 % Till:
@@ -345,6 +343,7 @@
 
 % Act
 \newcommand{\act}[1]{%
+    \if@book\thispagestyle{firstPageOfAct}\fi
     % To make line-breaking easier
     \obeylines              % A new line starts a new paragraph. Placed here
                             % because it doesn't work outside of a command
