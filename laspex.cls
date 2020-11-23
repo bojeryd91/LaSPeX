@@ -40,7 +40,7 @@
 \DeclareOption{without-entrances}{\@entrancesfalse}
 
 \ProcessOptions\relax
-\if@book\LoadClass[10pt,twoside]{article}\else\LoadClass{articl}\fi
+\if@book\LoadClass[10pt,twoside]{article}\else\LoadClass{article}\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Packages and global stuff
@@ -63,7 +63,7 @@
 \newlength{\sepreplik}                  % Till repliker
 \newlength{\vreplik}
 
-\if@book\setlength{\vreplik}{29mm}\else\setlength{\vreplik}{1in}\fi
+\if@book\setlength{\vreplik}{29mm}\else\setlength{\vreplik}{25mm}\fi
 \setlength{\sepreplik}{\vreplik}
 \addtolength{\sepreplik}{-0.1in}
 
@@ -277,17 +277,23 @@
 %%% Dessa kan gömmas med valet utan-instruktioner i manus preamble:
 % Scenanvisning
 \newcommand{\scenanvisning}[1]{%
-    \if@instructions\if@book\vspace{1mm}\bgroup\small\else\vspace{2mm}\fi\Needspace{24pt}{\textit{#1}}%
-	\else\ignorespaces\fi\if@book\egroup\fi}
+    \if@instructions%
+        \if@book\vspace{1mm}\bgroup\small%
+        \else\vspace{2mm}\fi%
+        \Needspace{24pt}{\textit{#1}}\if@book\egroup\fi%
+	\else\ignorespaces\fi}
 % Fortsätt scenanvisning på samma rad
 \newcommand{\scenanvisningforts}[1]{%
-    \if@instructions\nopagebreak\if@book\bgroup\small\fi{\textit{#1}}\if@book\egroup\fi\else\ignorespaces\fi}
+    \if@instructions\nopagebreak%
+        \if@book\bgroup\small\fi%
+        {\textit{#1}}\if@book\egroup\fi%
+    \else\ignorespaces\fi}
 % Kommentarer
 \newcommand{\kommentar}[1]{%
     \if@instructions\nopagebreak$\langle$\textit{#1}$\rangle$%
     \else\ignorespaces\fi}
 \if@book\renewcommand{\kommentar}[1]{%
-    \if@instructions\nopagebreak{\small\textit{#1}}\else\ignorespaces\fi}
+    \if@instructions\nopagebreak{\small\textit{#1}}\else\ignorespaces\fi}\fi
 % Hur
 \newcommand{\hur}[1]{\kommentar{#1:}}
 % Till:
