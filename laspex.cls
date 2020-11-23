@@ -430,10 +430,8 @@
     \subscennostar{#1}{#2}%
 }
 % Actually called command
-\makeatletter
 \newcommand\subscen{
 \@ifstar\subscenstar\subscennostar}
-\makeatother
 
 % Definierar en linje, används av \scen och \subscen
 \newcommand*{\enlinje}{
@@ -457,7 +455,6 @@
     \centering#1\end{minipage}\hspace*{\fill}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\makeatletter
 \NewEnviron{onepage}{%
 \if@onepages%
 \setlength{\tempwidth}{\textwidth}%
@@ -465,4 +462,3 @@
 \begin{figure}[p]\if@book\hspace{-\vreplik}\fi% 
 \begin{minipage}[t][\textheight][t]{\tempwidth}\BODY%
 \end{minipage}\end{figure}\else\ignorespaces\fi}
-\makeatother
