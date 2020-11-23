@@ -11,6 +11,7 @@
 \newif\if@onepages
 \newif\if@entrances
 
+% Setting default values
 \@bookfalse
 \@swedishtrue
 \@instructionstrue
@@ -290,7 +291,7 @@
     \else\ignorespaces\fi}
 % Kommentarer
 \newcommand{\kommentar}[1]{%
-    \if@instructions\nopagebreak$\langle$\textit{#1}$\rangle$%
+    \if@instructions\nopagebreak$\langle$\textit{#1}\nolinebreak$\rangle$%
     \else\ignorespaces\fi}
 \if@book\renewcommand{\kommentar}[1]{%
     \if@instructions\nopagebreak{\small\textit{#1}}\else\ignorespaces\fi}\fi
@@ -298,8 +299,6 @@
 \newcommand{\hur}[1]{\kommentar{#1:}}
 % Till:
 \newcommand{\till}[1]{\kommentar{Till #1:}}
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% music box
@@ -333,11 +332,13 @@
         \hbox{\makebox[\tempwidth][c]{\Large\bf{#1}}}%
         \settowidth{\tmpM}{#6}% Test if subtitle exists
         \ifnum\tmpM>0%
-            \smallskip\hbox{\makebox[\tempwidth][c]{#6}}\fi
+            \smallskip\hbox{\makebox[\tempwidth][c]{#6}}%
+        \fi
         \smallskip%
         \hbox{\makebox[\tempwidth][c]{#2}}%
         \bigskip%
     }}\medskip}
+\fi
 \newcommand{\musikbox}[6]{\musicbox{#1}{#2}{#3}{#4}{#5}{#6}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -359,11 +360,17 @@
     \stepcounter{actcounter}%
     \setcounter{pagecounter_help}{\value{page}}%
     \setcounter{pagecounter_help2}{1}%
-    \hspace{-\vreplik}\if@book\hfil\actfont{\actprint{} \arabic{actcounter}}\hfil\else%
-    \parbox[b]{\sepreplik}%
-    {\raggedright\actfont{\uppercase{\actprint{}} \arabic{actcounter}}}\hspace{7pt}\fi%
+    \hspace{-\vreplik}%
+    \if@book\hfil\actfont{\actprint{} \arabic{actcounter}}\hfil%
+    \else\parbox[b]{\sepreplik}%
+        {\raggedright\actfont{\uppercase{\actprint{}} \arabic{actcounter}}}\hspace{7pt}%
+    \fi%
     \settowidth{\tmpM}{#1}%
-    \ifnum\tmpM>0\if@book\par\medskip\hspace{-\vreplik}\hfill\actfont{#1}\hfill\else\actfont{#1}\fi%
+    \ifnum\tmpM>0%
+        \if@book\par\medskip%
+            \hspace{-\vreplik}\hfill\actfont{#1}\hfill%
+        \else\actfont{#1}%
+        \fi%
     \else\par\fi
     \value{scencounter} = 0% Reset scene counter
     \everypar{\hangindent1em\hangafter1}%
