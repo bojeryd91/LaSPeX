@@ -19,6 +19,7 @@
 \@scenerytrue
 \@onepagestrue
 \@entrancestrue
+\@tocropfalse
 
 % If option on
 \DeclareOption{book}{\@booktrue\@twosidetrue\@sceneryfalse\@entrancesfalse}
@@ -39,6 +40,8 @@
 \DeclareOption{utan-onepages}{\@onepagesfalse}
 \DeclareOption{with-entrances}{\@entrancestrue}
 \DeclareOption{without-entrances}{\@entrancesfalse}
+
+\DeclareOption{with-crop}{\@tocroptrue}
 
 \ProcessOptions\relax
 \if@book\LoadClass[10pt,twoside]{article}\else\LoadClass{article}\fi
@@ -86,6 +89,7 @@
 % bmargin=1in,
 % marginparsep=0.2in,   % Distance between character and line.
 ]{geometry}%
+\usepackage[cam,a4,center]{crop}%
 \else\RequirePackage[a4paper,
  left=1.9in,
  top=1in,
@@ -161,7 +165,7 @@
         \fancyhead[RO]{\footnotesize\bf{\korttitel{} \theactcounter:\thescencounter}}%
         \fancyhead[LE]{\footnotesize\bf{\spextitel{}}}%
         \fancyfootoffset[lf]{\vreplik}%
-        \fancyfoot{\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern5pt\arabic{page}\kern5pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill}\fi
+        \fancyfoot{\hrulefill\raisebox{-.6ex}{\ \bf \thepage\ }\hrulefill}\fi
 
 %%% First page of act
 \fancypagestyle{firstPageOfAct}{
