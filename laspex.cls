@@ -51,14 +51,13 @@
 %%% Packages and global stuff
 \RequirePackage[utf8]{inputenc}
 \RequirePackage{needspace}      % To manage page breaking
-\RequirePackage{ifthen}	        % Enables if's and else's
-% \RequirePackage{etoolbox}     % Funderar på att fasa ut ifthen mot etoolbox
 \RequirePackage{fancyhdr}
 \RequirePackage[yyyymmdd]{datetime}
 \RequirePackage[normalem]{ulem}         % Provides styles for instructions
 \RequirePackage[flushmargin]{footmisc}  % Flushes content in page footer etc.
 \RequirePackage{fancybox}        % Used for nice-looking music box
 \RequirePackage{environ}
+\RequirePackage{graphicx}
 
 \def\@actprint{Act}
 \def\@sceneprint{Scene}
@@ -470,3 +469,39 @@
 \begin{figure}[p]\if@book\hspace{-\vreplik}\fi% 
 \begin{minipage}[t][\textheight][t]{\tempwidth}\BODY%
 \end{minipage}\end{figure}\else\ignorespaces\fi}
+
+\newlength{\ramskip}
+\newlength{\eftersongrubrik}
+\setlength{\ramskip}{3mm}
+\setlength{\eftersongrubrik}{0mm}
+
+\newcommand{\sanglada}[1]{%
+\noindent\framebox[133mm]{%
+\vspace{\ramskip}%
+\makebox[\textwidth][c]{%
+\begin{minipage}[t]{129.5mm}%
+{\setlength{\columnsep}{18mm}
+ \setlength{\parskip}{12pt}%
+#1%
+}%
+\vspace{\ramskip}%
+\end{minipage}}}}
+
+\newcommand{\radskip}{\\ \hspace*{0pt}\ignorespaces}
+\newcommand{\sangare}[1]{%
+\hspace*{-10mm}\makebox[10mm][l]{#1:}%
+\ignorespaces}
+
+\NewEnviron{sangtextsingel}{%
+\makebox[\textwidth][c]{%
+\begin{minipage}{122mm}\BODY%
+\end{minipage}}}%
+
+\NewEnviron{sangtext}{%
+\makebox[\textwidth][c]{%
+\hspace*{10mm}\begin{minipage}{112mm}\BODY%
+\end{minipage}}}%
+
+\newcommand{\rubrik}[1]{%
+\begin{sangtextsingel}\vspace{12pt}\makebox[\textwidth][c]{%
+ {\Large\bf #1}}\vspace{\eftersongrubrik}\end{sangtextsingel}}
