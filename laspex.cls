@@ -166,7 +166,7 @@
         \fancyhead[RO]{\footnotesize\bf{\korttitel{} \theactcounter:\thescencounter}}%
         \fancyhead[LE]{\footnotesize\bf{\spextitel{}}}%
         \fancyfootoffset[lf]{\vreplik}%
-        \fancyfoot{\hrulefill\raisebox{-.6ex}{\ \bf \thepage\ }\hrulefill}\fi
+        \fancyfoot{\hrulefill\raisebox{-.6ex}{\, {\bf \thepage}\, }\hrulefill}\fi
 
 %%% First page of act
 \fancypagestyle{firstPageOfAct}{
@@ -242,7 +242,7 @@
             \if@book\else\bf\fi{#1:}}}%
         \hspace{7pt}\ignorespaces}%
 % Fortsätt replik
-\newcommand{\forts}{\vspace{2mm}\Needspace{24pt}\ignorespaces}
+\newcommand{\forts}{\if@book\vspace{1mm}\else\vspace{2mm}\fi\Needspace{24pt}\ignorespaces}
 % För att markera nya repliker
 \newcommand{\nytt}[1]{#1\marginpar{\texttt{NYTT!!!}}}
 % För att markera strukna repliker
@@ -342,7 +342,7 @@
         \smallskip%
         \hbox{\makebox[\tempwidth][c]{#2}}%
         \bigskip%
-    }}\medskip}
+    }}\bigskip}
 \fi
 \newcommand{\musikbox}[6]{\musicbox{#1}{#2}{#3}{#4}{#5}{#6}}
 
@@ -384,15 +384,18 @@
 \newcommand{\akt}[1]{\act{#1}}
 % Scene
 \newcommand{\scene}[1]{%
-    \if@book\bigskip\else\enlinje\fi%
+    \if@book\medskip\else\enlinje\fi%
     \Needspace{72pt}%
     \stepcounter{scencounter}%
     \setcounter{subscenecounter}{0}%
     \hspace{-\vreplik}%
-    \if@book\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern5pt%
-        \scenfont{\uppercase{\sceneprint{}} \arabic{actcounter}:\arabic{scencounter}}%
-        \kern5pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern\z@%
+    \if@book{\hrulefill\raisebox{-.5ex}{\, \scenfont{\uppercase{\sceneprint{}} %
+        \arabic{actcounter}:\arabic{scencounter}}\, }\hrulefill}%
         \par\smallskip\hspace{-\vreplik}\hfill\scenfont{#1}\hfill%
+    %\if@book\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern5pt%
+    %    \scenfont{\uppercase{\sceneprint{}} \arabic{actcounter}:\arabic{scencounter}}%
+    %    \kern5pt\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern\z@%
+    %    \par\smallskip\hspace{-\vreplik}\hfill\scenfont{#1}\hfill%
     \else\parbox[b]{\sepreplik}%
     {\raggedright\scenfont{\uppercase{\sceneprint{}} \arabic{actcounter}.\arabic{scencounter}}}\hspace{7pt}\scenfont{#1}% Scene name
     \fi%
