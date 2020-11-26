@@ -10,6 +10,7 @@
 \newif\if@scenery
 \newif\if@onepages
 \newif\if@entrances
+\newif\if@cropmarks
 
 % Setting default values
 \@bookfalse
@@ -19,7 +20,7 @@
 \@scenerytrue
 \@onepagestrue
 \@entrancestrue
-\@tocropfalse
+\@cropmarksfalse
 
 % If option on
 \DeclareOption{book}{\@booktrue\@twosidetrue\@sceneryfalse\@entrancesfalse}
@@ -41,7 +42,7 @@
 \DeclareOption{with-entrances}{\@entrancestrue}
 \DeclareOption{without-entrances}{\@entrancesfalse}
 
-\DeclareOption{with-crop}{\@tocroptrue}
+\DeclareOption{with-crop}{\@cropmarkstrue}
 
 \ProcessOptions\relax
 \if@book\LoadClass[10pt,twoside]{article}\else\LoadClass{article}\fi
@@ -89,7 +90,7 @@
 % bmargin=1in,
 % marginparsep=0.2in,   % Distance between character and line.
 ]{geometry}%
-\usepackage[cam,a4,center]{crop}%
+\if@cropmarks\usepackage[cam,a4,center]{crop}\fi%
 \else\RequirePackage[a4paper,
  left=1.9in,
  top=1in,
