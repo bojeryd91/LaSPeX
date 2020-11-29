@@ -334,15 +334,16 @@
     \vbox{%
         \bigskip%
         \setlength{\tempwidth}{\musicboxl}%
-        \addtolength{\tempwidth}{-10pt}%
+        \addtolength{\tempwidth}{-2.8pt}%
+        \addtolength{\tempwidth}{-2mm}%
         \hbox{\makebox[\tempwidth][c]{\Large\bf{#1}}}%
         \settowidth{\tmpM}{#6}\ifnum\tmpM>0%
             \smallskip\hbox{\makebox[\tempwidth][c]{#6}}%
-        \fi
+        \fi%
         \smallskip%
         \hbox{\makebox[\tempwidth][c]{#2}}%
         \bigskip%
-    }}\egroup}\egroup\bigskip}
+    }}\egroup}\egroup\bigskip}%
 \fi
 \newcommand{\musikbox}[6]{\musicbox{#1}{#2}{#3}{#4}{#5}{#6}}
 
