@@ -336,7 +336,7 @@
         \setlength{\tempwidth}{\musicboxl}%
         \addtolength{\tempwidth}{-10pt}%
         \hbox{\makebox[\tempwidth][c]{\Large\bf{#1}}}%
-        \def\temp{#6}\ifx\temp\empty
+        \settowidth{\tmpM}{#6}\ifnum\tmpM>0%
             \smallskip\hbox{\makebox[\tempwidth][c]{#6}}%
         \fi
         \smallskip%
