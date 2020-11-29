@@ -57,7 +57,6 @@
 \RequirePackage[yyyymmdd]{datetime}
 \RequirePackage[normalem]{ulem}         % Provides styles for instructions
 \RequirePackage[flushmargin]{footmisc}  % Flushes content in page footer etc.
-\RequirePackage{fancybox}        % Used for nice-looking music box
 \RequirePackage{environ}
 \RequirePackage{graphicx}
 
@@ -318,12 +317,13 @@
 %           title}{Original composer}{Optional subtitle}
 \newcommand{\musicbox}[6]{
     \medskip%
-    \doublebox{%
+    \setlength{\tempwidth}{\musicboxl}%
+    \addtolength{\tempwidth}{-8pt}%
+    \bgroup\setlength{\fboxsep}{1pt}\fbox{%
+    \bgroup\setlength{\fboxsep}{3pt}\fbox{%
     \vbox{%
         \hbox{\parbox[t]{0.8\musicboxl}{\small #2}}%
         \medskip%
-        \setlength{\tempwidth}{\musicboxl}%
-        \addtolength{\tempwidth}{-10pt}%
         \hbox{\makebox[\tempwidth][c]{\Large\bf{#1}}}%
         \settowidth{\tmpM}{#6}% Test if subtitle exists
         \ifnum\tmpM>0%
@@ -333,7 +333,7 @@
         \medskip%
         \hbox{\parbox[t]{\tempwidth}%
             {\textit{\small #3}}}%
-    }}%
+    }}\egroup}\egroup%
 \medskip}
 \if@book\renewcommand{\musicbox}[6]{\bigskip%
     \bgroup\setlength{\fboxrule}{0.4pt}\setlength{\fboxsep}{1mm}%
