@@ -30,6 +30,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Options
 % Definiera option att ta bort scenhänvisningar
+\DeclareOption{without-instructions}{\@instructionsfalse}
+\DeclareOption{with-instructions}{\@instructionstrue}
 \DeclareOption{utan-instruktioner}{\@instructionsfalse}
 \DeclareOption{med-instruktioner}{\@instructionstrue}
 
@@ -278,30 +280,36 @@
     \endgroup\else\ignorespaces\fi
 }
 
-%%% Scenanvisningar och kommentarer
-%%% Dessa kan gömmas med valet utan-instruktioner i manus preamble:
-% Scenanvisning
-\newcommand{\scenanvisning}[1]{%
+%%% Instruction/comment/etc. Scenanvisningar/kommentarer
+%   To hid, use without-instructions as option
+%   Dessa kan gömmas med valet utan-instruktioner i manus preamble:
+% Instruction/Scenanvisning
+\newcommand{\instruction}[1]{%
     \if@instructions%
         \if@book\vspace{1mm}\bgroup\small%
         \else\vspace{2mm}\fi%
         \Needspace{24pt}{\textit{#1}}\if@book\egroup\fi%
 	\else\ignorespaces\fi}
-% Fortsätt scenanvisning på samma rad
-\newcommand{\scenanvisningforts}[1]{%
+\newcommand{\scenanvisning}[1]{\instruction{#1}}
+% Continuation of instruction on line/Fortsätt scenanvisning på rad
+\newcommand{\instructioncont}[1]{%
     \if@instructions\nopagebreak%
         \if@book\bgroup\small\fi%
         {\textit{#1}}\if@book\egroup\fi%
     \else\ignorespaces\fi}
-% Kommentarer
-\newcommand{\kommentar}[1]{%
+\newcommand{\scenanvisningforts}[1]{\instructioncont}
+% Comment/kommentar
+\newcommand{\comment}[1]{%
     \if@instructions\nopagebreak$\langle$\textit{#1}\nolinebreak$\rangle$%
     \else\ignorespaces\fi}
-\if@book\renewcommand{\kommentar}[1]{%
+\if@book\renewcommand{\comment}[1]{%
     \if@instructions\nopagebreak{\small\textit{#1}}\else\ignorespaces\fi}\fi
-% Hur
-\newcommand{\hur}[1]{\kommentar{#1:}}
-% Till:
+\newcommand{\kommentar}[1]{\comment{#1}}
+% How/hur
+\newcommand{\how}[1]{\comment{#1:}}
+\newcommand{\hur}[1]{\how{#1}}
+% To:/Till:
+\renewcommand{\to}[1]{\comment{To #1:}}
 \newcommand{\till}[1]{\kommentar{Till #1:}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
