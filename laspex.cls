@@ -328,20 +328,21 @@
     }}%
 \medskip}
 \if@book\renewcommand{\musicbox}[6]{\bigskip%
-    \hspace{-\vreplik}\doublebox{%
+    \bgroup\setlength{\fboxrule}{0.4pt}\setlength{\fboxsep}{1mm}%
+    \hspace{-\vreplik}\fbox{%
+    \bgroup\setlength{\fboxrule}{1.0pt}\setlength{\fboxsep}{0pt}\fbox{%
     \vbox{%
-        \bigskip
+        \bigskip%
         \setlength{\tempwidth}{\musicboxl}%
         \addtolength{\tempwidth}{-10pt}%
         \hbox{\makebox[\tempwidth][c]{\Large\bf{#1}}}%
-        \settowidth{\tmpM}{#6}% Test if subtitle exists
-        \ifnum\tmpM>0%
+        \def\temp{#6}\ifx\temp\empty
             \smallskip\hbox{\makebox[\tempwidth][c]{#6}}%
         \fi
         \smallskip%
         \hbox{\makebox[\tempwidth][c]{#2}}%
         \bigskip%
-    }}\bigskip}
+    }}\egroup}\egroup\bigskip}
 \fi
 \newcommand{\musikbox}[6]{\musicbox{#1}{#2}{#3}{#4}{#5}{#6}}
 
