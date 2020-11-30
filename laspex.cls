@@ -1,7 +1,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{laspex}[2020/11/16]
+\ProvidesClass{laspex}[2020/11/30]
 
 \newif\if@swedish
 \newif\if@instructions
@@ -331,7 +331,7 @@
         \hbox{\makebox[\MBInnerWidth][c]{\Large\bf{#1}}}%
         \settowidth{\tmpM}{#6}% Test if subtitle exists
         \ifnum\tmpM>0%
-            \smallskip\hbox{\makebox[\tempwidth][c]{#6}}\fi
+            \smallskip\hbox{\makebox[\MBInnerWidth][c]{#6}}\fi
         \smallskip%
         \hbox{\makebox[\MBInnerWidth][c]{({\textit{#4/#5}})}}%
         \medskip%
@@ -345,15 +345,12 @@
     \bgroup\setlength{\fboxrule}{1.0pt}\setlength{\fboxsep}{0pt}\fbox{%
     \vbox{%
         \bigskip%
-        \setlength{\tempwidth}{\musicboxl}%
-        \addtolength{\tempwidth}{-2.8pt}%
-        \addtolength{\tempwidth}{-2mm}%
-        \hbox{\makebox[\tempwidth][c]{\Large\bf{#1}}}%
+        \hbox{\makebox[\MBInnerWidth][c]{\Large\bf{#1}}}%
         \settowidth{\tmpM}{#6}\ifnum\tmpM>0%
-            \smallskip\hbox{\makebox[\tempwidth][c]{#6}}%
+            \smallskip\hbox{\makebox[\MBInnerWidth][c]{#6}}%
         \fi%
         \smallskip%
-        \hbox{\makebox[\tempwidth][c]{#2}}%
+        \hbox{\makebox[\MBInnerWidth][c]{#2}}%
         \bigskip%
     }}\egroup}\egroup\bigskip}%
 \fi
