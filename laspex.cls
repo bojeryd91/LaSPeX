@@ -315,23 +315,27 @@
 %%% music box
 %\musicbox{Title}{Singer}{What happens in the song}{Original
 %           title}{Original composer}{Optional subtitle}
+\newlength{\MBInnerWidth}
+\setlength{\MBInnerWidth}{\textwidth}
+\if@book\addtolength{\MBInnerWidth}{\vreplik}%
+        \addtolength{\MBInnerWidth}{-2.8pt}%
+        \addtolength{\MBInnerWidth}{-2mm}%
+\else\addtolength{\MBInnerWidth}{-9.6pt}\fi
 \newcommand{\musicbox}[6]{
     \medskip%
-    \setlength{\tempwidth}{\musicboxl}%
-    \addtolength{\tempwidth}{-8pt}%
     \bgroup\setlength{\fboxsep}{1pt}\fbox{%
     \bgroup\setlength{\fboxsep}{3pt}\fbox{%
     \vbox{%
-        \hbox{\parbox[t]{0.8\musicboxl}{\small #2}}%
+        \hbox{\parbox[t]{0.8\MBInnerWidth}{\small #2}}%
         \medskip%
-        \hbox{\makebox[\tempwidth][c]{\Large\bf{#1}}}%
+        \hbox{\makebox[\MBInnerWidth][c]{\Large\bf{#1}}}%
         \settowidth{\tmpM}{#6}% Test if subtitle exists
         \ifnum\tmpM>0%
             \smallskip\hbox{\makebox[\tempwidth][c]{#6}}\fi
         \smallskip%
-        \hbox{\makebox[\tempwidth][c]{({\textit{#4/#5}})}}%
+        \hbox{\makebox[\MBInnerWidth][c]{({\textit{#4/#5}})}}%
         \medskip%
-        \hbox{\parbox[t]{\tempwidth}%
+        \hbox{\parbox[t]{\MBInnerWidth}%
             {\textit{\small #3}}}%
     }}\egroup}\egroup%
 \medskip}
