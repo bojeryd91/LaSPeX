@@ -72,14 +72,15 @@
 \setlength{\sepreplik}{\vreplik}
 \addtolength{\sepreplik}{-0.1in}
 
-\newlength{\tempwidth}\setlength{\tempwidth}{133mm}\addtolength{\tempwidth}{-\vreplik}
+\newlength{\pagetextWidth}\setlength{\pagetextWidth}{133mm}
+\newlength{\linetextWidth}\setlength{\linetextWidth}{133mm}\addtolength{\linetextWidth}{-\vreplik}
 \newlength{\templeft}\setlength{\templeft}{18.5mm}\addtolength{\templeft}{\vreplik}
 
 \if@book\RequirePackage[asymmetric,%
  paperheight=240mm,
  paperwidth=170mm,
  textheight=185mm,
- textwidth=\tempwidth,
+ textwidth=\linetextWidth,
  voffset=0mm,
  hoffset=0mm,
  headsep=12pt,
@@ -475,10 +476,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NewEnviron{onepage}{%
 \if@onepages%
-\setlength{\tempwidth}{\textwidth}%
-\if@book\addtolength{\tempwidth}{\vreplik}\fi%
 \begin{figure}[p]\if@book\hspace{-\vreplik}\fi% 
-\begin{minipage}[t][\textheight][t]{\tempwidth}\BODY%
+\begin{minipage}[t][\textheight][t]{%
+    \if@book\pagetextWidth%
+    \else\textwidth\fi}\BODY%
 \end{minipage}\end{figure}\else\ignorespaces\fi}
 
 \newlength{\ramskip}
@@ -487,7 +488,7 @@
 \setlength{\eftersongrubrik}{0mm}
 
 \newcommand{\sanglada}[1]{%
-\noindent\framebox[133mm]{%
+\noindent\framebox[\textwidth]{%
 \vspace{\ramskip}%
 \makebox[\textwidth][c]{%
 \begin{minipage}[t]{129.5mm}%
