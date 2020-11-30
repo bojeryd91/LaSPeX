@@ -336,20 +336,20 @@
             {\textit{\small #3}}}%
     }}\egroup}\egroup%
 \medskip}
-\if@book\renewcommand{\musicbox}[6]{\bigskip%
+\if@book\renewcommand{\musicbox}[6]{\vspace{3mm}%
     \bgroup\setlength{\fboxrule}{0.4pt}\setlength{\fboxsep}{1mm}%
     \hspace{-\vreplik}\fbox{%
     \bgroup\setlength{\fboxrule}{1.0pt}\setlength{\fboxsep}{0pt}\fbox{%
     \vbox{%
-        \bigskip%
+        \vspace*{4mm}%
         \hbox{\makebox[\MBInnerWidth][c]{\Large\bf{#1}}}%
         \settowidth{\tmpM}{#6}\ifnum\tmpM>0%
-            \smallskip\hbox{\makebox[\MBInnerWidth][c]{#6}}%
+            \vspace*{3pt}\hbox{\makebox[\MBInnerWidth][c]{#6}}%
         \fi%
-        \smallskip%
+        \vspace*{3pt}%
         \hbox{\makebox[\MBInnerWidth][c]{#2}}%
-        \bigskip%
-    }}\egroup}\egroup\bigskip}%
+        \vspace*{4mm}%
+    }}\egroup}\egroup\vspace{3mm}}%
 \fi
 \newcommand{\musikbox}[6]{\musicbox{#1}{#2}{#3}{#4}{#5}{#6}}
 
