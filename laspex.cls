@@ -104,10 +104,6 @@
  footskip=30pt
 ]{geometry}\fi
 
-\newlength{\musicboxl}
-\setlength{\musicboxl}{\textwidth}
-\if@book\addtolength{\musicboxl}{\vreplik}\fi
-
 \setlength{\parindent}{0pt}     % Removes indents in the beginning of paragraphs
 \pagestyle{fancy}               % Enable headings
 
