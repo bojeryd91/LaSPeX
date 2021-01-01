@@ -282,9 +282,9 @@
 % Instruction/Scenanvisning
 \newcommand{\instruction}[1]{%
     \if@instructions%
-        \if@book\vspace{1mm}\bgroup\small%
-        \else\vspace{2mm}\fi%
-        \Needspace{24pt}{\textit{#1}}\if@book\egroup\fi%
+        \if@book\vspace{1mm}%
+        \else\vspace{2mm}\fi\bgroup\small%
+        \Needspace{24pt}{\textit{#1}}\egroup%
 	\else\ignorespaces\fi}
 \newcommand{\scenanvisning}[1]{\instruction{#1}}
 % Continuation of instruction on line/Fortsätt scenanvisning på rad
