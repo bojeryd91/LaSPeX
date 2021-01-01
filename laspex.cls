@@ -244,7 +244,7 @@
 \newcommand{\wideLine}[1]{\if@book\vspace{1mm}\else\vspace{2mm}\fi\Needspace{24pt}%
     \hspace{-\vreplik}%
     \mbox{%
-        \parbox[b]{10cm}{\raggedright%
+        \parbox[b]{\pagetextWidth}{\raggedright%
             \if@book\else\bf\fi{#1:}}}%
         \hspace{7pt}\vspace{1mm}\par%
         \ignorespaces}%
