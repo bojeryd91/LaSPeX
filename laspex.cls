@@ -240,6 +240,17 @@
         \hspace{7pt}\ignorespaces}%
 % Fortsätt replik
 \newcommand{\forts}{\if@book\vspace{1mm}\else\vspace{2mm}\fi\Needspace{24pt}\ignorespaces}
+% Wide line
+\newcommand{\wideLine}[1]{\if@book\vspace{1mm}\else\vspace{2mm}\fi\Needspace{24pt}%
+    \hspace{-\vreplik}%
+    \mbox{%
+        \parbox[b]{10cm}{\raggedright%
+            \if@book\else\bf\fi{#1:}}}%
+        \hspace{7pt}\vspace{1mm}\par%
+        \ignorespaces}%
+% Bred replik
+\newcommand{\bredReplik}[1]{\wideLine{#1}}
+        
 % För att markera nya repliker
 \newcommand{\nytt}[1]{#1\marginpar{\texttt{NYTT!!!}}}
 % För att markera strukna repliker
@@ -272,8 +283,8 @@
                 {\texttt{#1}}}%
             \hspace{7pt}#2%
         }%
-        \addtocounter{footnote}{-1}
-    \endgroup\else\ignorespaces\fi
+        \addtocounter{footnote}{-1}%
+    \endgroup\fi\ignorespaces%
 }
 
 %%% Instruction/comment/etc. Scenanvisningar/kommentarer
