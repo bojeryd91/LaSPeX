@@ -68,7 +68,7 @@
 \newlength{\sepreplik}                  % Till repliker
 \newlength{\vreplik}
 
-\if@book\setlength{\vreplik}{29mm}\else\setlength{\vreplik}{25mm}\fi
+\if@book\setlength{\vreplik}{29mm}\else\setlength{\vreplik}{27mm}\fi
 \setlength{\sepreplik}{\vreplik}
 \addtolength{\sepreplik}{-0.1in}
 
