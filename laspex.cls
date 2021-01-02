@@ -156,9 +156,7 @@
     \hspace{-\marginparsep}\hspace{-20mm}%
 }
 \lhead{\footnotesize\bf{\@actprint{} \theactcounter}}
-\lfoot{\footnotesize\if@swedishUtskrift%
-                        \else Print out\fi%
-                        : \today, kl. \currenttime}
+\lfoot{\footnotesize Utskrift: \today, kl. \currenttime}
 
 \if@book\fancyhf{}%
         \fancyheadoffset[lh]{\vreplik}%
