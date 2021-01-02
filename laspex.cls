@@ -156,9 +156,7 @@
     \hspace{-\marginparsep}\hspace{-20mm}%
 }
 \lhead{\footnotesize\bf{\@actprint{} \theactcounter}}
-\lfoot{\footnotesize\if@swedishUtskrift%
-                        \else Print out\fi%
-                        : \today, kl. \currenttime}
+\lfoot{\footnotesize Utskrift: \today, kl. \currenttime}
 
 \if@book\fancyhf{}%
         \fancyheadoffset[lh]{\vreplik}%
@@ -234,16 +232,20 @@
 %%% Kommandon för repliker och scenanvisningar
 
 % Replik
-\newcommand{\replik}[1]{\if@book\vspace{1mm}\else\vspace{2mm}\fi\Needspace{24pt}%
+\newcommand{\replik}[1]{\everypar{\hangindent1em\hangafter1}%
+    \if@book\vspace{1mm}\else\vspace{2mm}\fi\Needspace{24pt}%
     \hspace{-\vreplik}%
     \mbox{%
         \parbox[b]{\sepreplik}{\raggedright%
             \if@book\else\bf\fi{#1:}}}%
         \hspace{7pt}\ignorespaces}%
 % Fortsätt replik
-\newcommand{\forts}{\if@book\vspace{1mm}\else\vspace{2mm}\fi\Needspace{24pt}\ignorespaces}
+\newcommand{\forts}{%
+    \if@book\vspace{1mm}\else\vspace{2mm}\fi%
+    \Needspace{24pt}\ignorespaces}
 % Wide line
-\newcommand{\wideLine}[1]{\if@book\vspace{1mm}\else\vspace{2mm}\fi\Needspace{24pt}%
+\newcommand{\wideLine}[1]{%
+    \if@book\vspace{1mm}\else\vspace{2mm}\fi\Needspace{24pt}%
     \hspace{-\vreplik}%
     \mbox{%
         \parbox[b]{\pagetextWidth}{\raggedright%
@@ -306,7 +308,7 @@
     \if@instructions\nopagebreak%
         {\small\textit{#1}}%
     \else\ignorespaces\fi}
-\newcommand{\scenanvisningforts}[1]{\instructioncont}
+\newcommand{\scenanvisningforts}[1]{\instructioncont{#1}}
 % Comment/kommentar
 \newcommand{\comment}[1]{%
     \if@instructions\nopagebreak$\langle${\small\textit{#1}}\nolinebreak$\rangle$%
@@ -398,7 +400,6 @@
         \fi%
     \else\par\fi
     \value{scencounter} = 0% Reset scene counter
-    \everypar{\hangindent1em\hangafter1}%
     \smallskip%
 }
 \newcommand{\akt}[1]{\act{#1}}
