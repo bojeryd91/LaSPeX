@@ -234,7 +234,8 @@
 %%% Kommandon för repliker och scenanvisningar
 
 % Replik
-\newcommand{\replik}[1]{\if@book\vspace{1mm}\else\vspace{2mm}\fi\Needspace{24pt}%
+\newcommand{\replik}[1]{%
+\if@book\vspace{1mm}\else\vspace{2mm}\fi\Needspace{24pt}%
     \hspace{-\vreplik}%
     \mbox{%
         \parbox[b]{\sepreplik}{\raggedright%
