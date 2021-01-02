@@ -146,7 +146,7 @@
     \headertext{\spextitel{}}%
     \settowidth{\tmpE}{\ellertitel{}}%
     % If tmpE is empty, do nothing, otherwise, print out eller-title
-    \ifnum\tmpE>0\headertext{\ellertitel}\fi%
+    \ifnum\tmpE>0\headertext{ -- eller \ellertitel}\fi%
     \setcounter{pagecounter_help2}{\value{page}}%
     \addtocounter{pagecounter_help2}{-\value{pagecounter_help}}%
     \addtocounter{pagecounter_help2}{1}%
