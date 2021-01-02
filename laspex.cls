@@ -250,7 +250,7 @@
         \ignorespaces}%
 % Bred replik
 \newcommand{\bredReplik}[1]{\wideLine{#1}}
-        
+
 % För att markera nya repliker
 \newcommand{\nytt}[1]{#1\marginpar{\texttt{NYTT!!!}}}
 % För att markera strukna repliker
@@ -259,7 +259,7 @@
 %%% In- och utgång samt rekvisita
 \newcommand{\stageInstruction}[2]{%
         \if@entrances\vspace{2mm}\Needspace{24pt}{\uwave{#1}}%
-        \marginpar{\texttt{#2}}\else\ignorespaces\fi}
+        \marginpar{\texttt{#2}}\fi\ignorespaces}
 % Ingång
 \newcommand{\ingang}[1]{\stageInstruction{#1}{Ingång}}
 % Utgång
@@ -302,13 +302,12 @@
 % Continuation of instruction on line/Fortsätt scenanvisning på rad
 \newcommand{\instructioncont}[1]{%
     \if@instructions\nopagebreak%
-        \if@book\bgroup\small\fi%
-        {\textit{#1}}\if@book\egroup\fi%
+        {\small\textit{#1}}%
     \else\ignorespaces\fi}
 \newcommand{\scenanvisningforts}[1]{\instructioncont}
 % Comment/kommentar
 \newcommand{\comment}[1]{%
-    \if@instructions\nopagebreak$\langle$\textit{#1}\nolinebreak$\rangle$%
+    \if@instructions\nopagebreak$\langle${\small\textit{#1}}\nolinebreak$\rangle$%
     \else\ignorespaces\fi}
 \if@book\renewcommand{\comment}[1]{%
     \if@instructions\nopagebreak{\small\textit{#1}}\else\ignorespaces\fi}\fi
