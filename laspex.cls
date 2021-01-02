@@ -232,7 +232,7 @@
 %%% Kommandon för repliker och scenanvisningar
 
 % Replik
-\newcommand{\replik}[1]{\everypar{\hangindent1em\hangafter1}%
+\newcommand{\replik}[1]{
     \if@book\vspace{1mm}\else\vspace{2mm}\fi\Needspace{24pt}%
     \hspace{-\vreplik}%
     \mbox{%
@@ -401,6 +401,7 @@
     \else\par\fi
     \value{scencounter} = 0% Reset scene counter
     \smallskip%
+    \everypar{\hangindent1em\hangafter1}%
 }
 \newcommand{\akt}[1]{\act{#1}}
 % Scene
