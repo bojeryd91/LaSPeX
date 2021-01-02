@@ -276,7 +276,8 @@
 \newcommand{\margintext}[2]{\if@scenery%
     \marginpar{\texttt{#1}}%
     \begingroup%
-        \renewcommand\thefootnote{}\footnote{%
+        \def\footnote{\gdef\@thefnmark{}\@footnotetext}%
+        \footnote{%
             \hspace{-0pt}%
             \mbox{%
                 \hspace{-\vreplik}\parbox[b]{\sepreplik}%
