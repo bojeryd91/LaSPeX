@@ -305,7 +305,7 @@
     \if@instructions\nopagebreak%
         {\small\textit{#1}}%
     \else\ignorespaces\fi}
-\newcommand{\scenanvisningforts}[1]{\instructioncont}
+\newcommand{\scenanvisningforts}[1]{\instructioncont{#1}}
 % Comment/kommentar
 \newcommand{\comment}[1]{%
     \if@instructions\nopagebreak$\langle${\small\textit{#1}}\nolinebreak$\rangle$%
@@ -430,7 +430,8 @@
     % If this is the first subscen (within
     % a scene), increase scencounter
     \ifthenelse{\value{subscenecounter} = 0}%
-    {\stepcounter{scencounter}}{}%
+    {%\stepcounter{scencounter}
+    }{}%
     \stepcounter{subscenecounter}%
     \hspace{-\vreplik}%
     \if@book\leavevmode\leaders\hbox{\rule[3pt]{0.4pt}{0.4pt}}\hfill\kern5pt%
@@ -454,6 +455,7 @@
 \newcommand{\subscenstar}[2]{
     % If starred version, increment scenecounter and reset subscenecounter.
     \setcounter{subscenecounter}{0}%
+    \stepcounter{scencounter}%
     \subscennostar{#1}{#2}%
 }
 % Actually called command

@@ -6,8 +6,8 @@
 \usepackage{blindtext}
 \usepackage{todonotes}
 
-\newcommand{\spextitel}{The laspex class}
-\newcommand{\ellertitel}{A non-existing funny pun}
+\newcommand{\spextitel}{laspex-klassen}
+\newcommand{\ellertitel}{typ}
 %\newcommand{\korttitel}{M\&E}
 
 \newcommand{\rom}{\replik{Romeo}}
@@ -20,7 +20,7 @@
 \end{framsida}
 
 \begin{karaktarsida}
-\paragraph{Denna stilfil} gör det enkelt att typsätta manus med sånger etc.
+\paragraph{Denna \LaTeX-klass} gör det enkelt att typsätta manus med sånger etc.
 \end{karaktarsida}
 
 \akt{De mest ofta använda kommandona}
@@ -29,64 +29,59 @@
 
 \scen{Akter och scener}
 
-\jul    För att påbörja en ny akt, använd
-        \verb!\akt{}!.
-        Om din akt har ett namn (t.ex., ``Akter och scener'') kan du i stället skriva
-        \verb!\akt{Akter och scener}!.
+\jul    För att påbörja en ny akt, använd\\ \verb!\akt{}!.
+        Om din akt har ett namn (t.ex., ``Akter och scener'') kan du i stället skriva\\ \verb!\akt{Akter och scener}!.
         
-\forts  Och för att börja en ny scen, använd
-        \verb!\scen{}! eller \verb!\scen{Namn på scen}!.
+\forts  Och för att börja en ny scen, använd\\ \verb!\scen{}! eller \verb!\scen{Namn på scen}!.
         
 \subscen{Delscener}
-\jul    Ibland behöver en scen delas upp i flera delscener. Detta kan du göra med kommandot
+\jul    För att dela upp en scen i flera delscener, använd
         \verb!\subscen{}!, t.ex. \verb!\subscen{Delscener}!
-        
-\forts  Om du vill manuellt ändra vilket tecken som används för delscenindelningen, använd för kalla den X
-        \verb!\subscen{Namn på scen}{X}!
-        Se nedan. Detta stoppar inte inkrementering av delscensräknaren.
+        Detta kommer inte inkremera scenräknaren, men nya delscensräknaren.
 
-\subscen{Kommentar}{X}
-\jul    Ännu inte bestämt om
-        \verb!\subscen{}! eller \verb!\subscen*{}!
-        ska stoppa inkrementering av scenräknaren.
+\subscen*{Delscen och inkremera scenräknaren.}
+\jul    Inkrementera scenräknaren en gång och nollställ subscenräknaren med stjärn\-varianten av kommandot\\ \verb!\subscen*{}!
+        Då en scen ska börja med en subscen är detta rätt kommando.
+
+\subscen{Delscen -- alternativt argument}{X}
+\jul    För att manuellt ändra vilket tecken som används för delscenindelningen, använd\\ \verb!\subscen{Namn på scen}{X}!
+        Detta stoppar inte inkrementering av delscensräknaren. Nästa delscen skulle heta 1.2c.
 
 \scen{Repliker och instruktioner}
 
+\subscen{Scenanvisningar}
+
 \scenanvisning{Med kommandot} \verb!\scenanvisning{}! \scenanvisningforts{kan du skriva instruktioner för skådis.}
 
-\jul    Hejhej! Och med \verb!\replik{}! skriv en rolls namn ut i vänstermarginalen följt av ett kolon. T.ex., \verb!\replik{Romeo}!.
-\rom    Och om du vill effektivisera ditt skrivande kan du i preamble använda
-        \verb!\newcommand{\rom}{\replik{Romeo}}!
-        vilket gör det möjligt att bara skriva
-        \verb!\rom Hejhej!,
-        i stället för
-        \verb!\replik{Romeo} Hejhej!.
-        
-\begin{itemize}
-    \item forts,
-    \item hur, till, kommentar
-\end{itemize}
+\scenanvisning{För att fortsätta på samma rad med en scenanvisning, använd}\\ \verb!\scenanvisningforts{}!\scenanvisningforts{.}
 
-\replik{Vad händer?} Upptäckt bugg! Efter itemize blir det inte längre indrag vid radbryte inom en "rad", varför är det så?
+\jul    Detta är ett exempel! \scenanvisningforts{Och det ser ut såhär.}
+
+\subscen{Repliker}
+\jul    Hejhej! Och med \verb!\replik{}! skrivs en rolls namn ut i vänstermarginalen följt av ett kolon. T.ex., \verb!\replik{Romeo}!.
+\rom    Och om du vill effektivisera ditt skrivande kan du i preamble använda\\ \verb!\newcommand{\rom}{\replik{Romeo}}!
+        vilket gör det möjligt att bara skriva\\ \verb!\rom Hejhej!,
+        i stället för\\ \verb!\replik{Romeo} Hejhej!.
+        
+\forts  Skapa ett ``tom'' replik med\\ \verb!\forts!.
+        Snyggt att använda efter t.ex. scenanvisningar eftersom lite vertikal utrymme skapas ovanför. Också bra för att dela upp repliker i stycken.
+
+\subscen{Hur, till, och andra kommentarer}
+
+
         
 \scen{Musiknummer}
-\jul    Om någon ska sjunga, använd
-        \verb!\musikbox{}{}{}{}{}!,
-        t.ex.
-        \verb!\musikbox{Titel på numret}{Vilka som medverkar}%!
-        \verb!{Beskrivning av vad som pågår}{Originaltitel}%!
-        \verb!{Originalkompositör}!
+
+\jul    Om någon ska sjunga, använd\\ \verb!\musikbox{}{}{}{}{}!,
+        t.ex.\\ \verb!\musikbox{Titel på numret}{Vilka som medverkar}%!\\ \verb!{Beskrivning av vad som pågår}{Originaltitel}%! \\ \verb!{Originalkompositör}!
 
 \musikbox{Titel på numret}{Vilka som medverkar}{Beskrivning av vad som pågår}{Originaltitel}{Originalkompositör}
 
-\jul    Du kan lägga till en undertitel genom att lägga till en på slutet med  t.ex.
-        \verb!\musikbox{Titel på numret}{Vilka som medverkar}%!
-        \verb!{Beskrivning av vad som pågår}{Originaltitel}%!
-        \verb!{Originalkompositör}{med en undertitel}!
+\jul    Du kan lägga till en undertitel genom att lägga till en på slutet med  t.ex.\\ \verb!\musikbox{Titel på numret}{Vilka som medverkar}%!\\ \verb!{Beskrivning av vad som pågår}{Originaltitel}%!\\ \verb!{Originalkompositör}{med en undertitel}!
 
 \musikbox{Titel på numret}{Vilka som medverkar}{Beskrivning av vad som pågår}{Originaltitel}{Originalkompositör}{med en undertitel}
 
-\subscen{Kommentar}
+\subscen{TO DO Kommentar}
 \rom    Ska komma ihåg att skapa en variant som inte skriver ut (/) om argument 4 och 5 är tomma, såsom i
     \verb!\musikbox{Titel på numret}{Vilka som medverkar}%!
     \verb!{Beskrivning av vad som pågår}{}%!
@@ -99,17 +94,16 @@
 
 \scen{Rörelser på scen, för inspicient}
 
-\jul    Om inspicienten vill enkelt se när roller går av och på scen kan de använda kommandona
-    \verb!\ingang{}! och
-    \verb!\utgang{}!
-    T.ex., säg att Romeo kommer på att hen ska gå av scenen. Då kan det skrivas såhär i manus:
+\jul    Om inspicienten vill enkelt se när roller går av och på scen kan de använda kommandona\\ \verb!\ingang{}! och\\ \verb!\utgang{}!
+        T.ex., säg att Romeo kommer på att hen ska gå av scenen. Då kan det skrivas såhär i manus:
 
-\scenanvisning{Romeo får ett infall att rusa ut.\utgang{Romeo går ut.}}
+\utgang{Romeo går ut.} \scenanvisningforts{ Romeo får ett infall att rusa ut.}
+\scenanvisning{Visar sig att han gjorde fel och vänder in igen.\ingang{Romeo går in.}}
 
-\subscen{Kommentar till rörelser på scenen}
-\rom    Varför påbörjas ny rad när utgång används? Så ska det väl inte vara?
+\subscen{TODO Kommentar till rörelser på scenen}
+\rom    Varför påbörjas ny rad när ingång används? Så ska det väl inte vara? Lägg till \nolinebreak som i scenanvisningforts
 
-\scen{Alternativ att stänga av och på funktionalitet}
+\scen{Alternativ för klassen}
 
 \akt{Bok-alternativet}
 
