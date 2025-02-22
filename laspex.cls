@@ -57,8 +57,7 @@
 \RequirePackage[yyyymmdd]{datetime}
 \RequirePackage[normalem]{ulem}         % Provides styles for instructions
 \RequirePackage[flushmargin]{footmisc}  % Flushes content in page footer etc.
-\RequirePackage{environ}
-\RequirePackage{graphicx}
+\RequirePackage{environ, graphicx, afterpage}
 
 \def\@actprint{Act}
 \def\@sceneprint{Scene}
@@ -178,8 +177,10 @@
     \def\LaSPeX{L\kern -.36em \raise.5ex\hbox{A}\kern -.15em\SPeX}
     \renewcommand{\headrulewidth}{0pt}
     \fancyhf{}
-    \if@book\else\lfoot{\footnotesize Utskrift: \today, kl. \currenttime}
-    \rfoot{\footnotesize \parbox[b]{65mm}{Skrivet i Jespers \LaSPeX-mall,\\ klart inspirerat utav Grodans \SPeX-mall}}\fi
+    \if@book\else%
+        \lfoot{\footnotesize Utskrift: \today, kl. \currenttime}
+        \rfoot{\footnotesize \parbox[b]{65mm}{Skrivet i Jespers \LaSPeX-mall,\\ klart inspirerat utav Grodans \SPeX-mall}}%
+    \fi
 }
 
 %%% Character page header and footer
@@ -198,8 +199,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Framsidan
 \newenvironment{framsida}{
-    \if@book\newgeometry{left=18.5mm,right=18.5mm}%
-    \else\newgeometry{left=1.5in,right=1.5in}\fi
+    \newpage%
+    \if@book%
+        \newgeometry{left=18.5mm,right=18.5mm}%
+    \else%
+        \newgeometry{left=1.5in,right=1.5in}%
+    \fi
     \pagestyle{framsida}
     \if@book\bgroup\fi
     \centering
@@ -210,14 +215,19 @@
         {\bf eller}\\ \bigskip%
         {\undertitelfont\ellertitel}%
         \bigskip\bigskip\bigskip%
-        \par\egroup\medskip\ignorespaces\else%
-    {\Huge\spextitel}\\ %
-    \settowidth{\tmpE}{\ellertitel{}}
-    \ifnum\tmpE>0\bigskip%
-    {\Large eller}\\ \medskip%
-    {\huge\ellertitel}\else\ignorespaces\fi%
-    \bigskip\par\fi%
-}
+        \par\egroup\medskip\ignorespaces%
+    \else%
+        {\Huge\spextitel}\\%
+        \settowidth{\tmpE}{\ellertitel{}}%
+        \ifnum\tmpE>0\bigskip%
+            {\Large eller}\\ \medskip%
+            {\huge\ellertitel}
+        \else%
+            \ignorespaces%
+        \fi%
+        \bigskip\par
+    \fi%
+}%
 {\clearpage\setcounter{page}{1}}
 
 %%% Karaktärsidan/rollbeskrivning
@@ -485,12 +495,32 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NewEnviron{onepage}{%
-\if@onepages%
-\begin{figure}[p]\if@book\hspace{-\vreplik}\fi% 
-\begin{minipage}[t][\textheight][t]{%
-    \if@book\pagetextWidth%
-    \else\textwidth\fi}\BODY%
-\end{minipage}\end{figure}\else\ignorespaces\fi}
+    \if@onepages%
+        % Print the content on the following page, which is necessary to
+        %   specify since the command ends with a \clearpage
+        % Ensure the content of this float is printed at the top of the page
+        \makeatletter
+            \setlength{\@fptop}{0pt}
+        \makeatother
+        % Define a float
+        \begin{figure}[p]\if@book\hspace{-\vreplik}\fi% 
+            \begin{minipage}[t]{%
+                \if@book%
+                    \pagetextWidth%
+                \else%
+                    \textwidth\fi%
+                }\BODY%
+            \end{minipage}%
+        \end{figure}%
+        % Clear the page of more content and restore placement of floats
+        \clearpage%
+        \makeatletter
+            \setlength{\@fptop}{0pt plus 1fil}
+        \makeatother
+    \else%
+        \ignorespaces%
+    \fi%
+}
 
 \newlength{\ramskip}
 \newlength{\eftersongrubrik}

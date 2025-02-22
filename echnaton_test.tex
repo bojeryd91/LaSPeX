@@ -12,17 +12,25 @@
 \newcommand{\pt}{\replik{Prästen}}
 \newcommand{\pa}{\replik{Prästinnan}}
 
-\usepackage{blindtext} % Just for test
+\usepackage{blindtext, mwe} % Just for test
+
+%\makeatletter
+%\setlength{\@fptop}{0pt}
+%\setlength{\@fpbot}{0pt plus 1fil}
+%\makeatother
 
 \begin{document}
 
-\iffalse
 \begin{onepage}
-Denna sida borde ligga först!
+    \thispagestyle{framsida}
+    Denna sida borde ligga först!
 \end{onepage}
-\thispagestyle{plain}
-\clearpage
-\fi
+
+\begin{framsida}
+    Denna ligger konstigt till vänster när vi använder option \textbf{with-crop}
+\end{framsida}
+
+
 
 \akt{I Faraos audienssal}
 
@@ -71,15 +79,16 @@ Denna sida borde ligga först!
 
 \anc    Nej mamma, teknik är bara för nördar!
 
-\nef      \dots{} eller dämma upp Nilen för att ge oss bättre skördar!
+\nef    \dots{} eller dämma upp Nilen för att ge oss bättre skördar!
 
 \anc    Det är så tråkigt att räkna och måtta.
 
 \musikbox{Pseudovetenskap och ingenjörskonst}{Anchesenpaaton \& Nefertite}{Pappa jag vill ha en italienare ur Stinsen brinner}{Galenskaparen Eriksson}{}
 
-\begin{onepage}
-\input{songs/pseudovetenskap}
-\end{onepage}
+\afterpage{%
+    \begin{onepage}
+        \input{songs/pseudovetenskap}
+    \end{onepage}}
 
 %\musik{Teknisk Mystik \NyMusikrad\musikundertitelfont eller Pseudovetenskap och ingenjörskonst}{\anc och \n}{Pappa jag vill ha en italienare}{Galenskaparna}{Text: Tore Kullgren. Arr: Karin S-A. \anc och \n argumenterar om teknik kontra andlighet.}
 
