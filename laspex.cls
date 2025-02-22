@@ -179,7 +179,7 @@
     \renewcommand{\headrulewidth}{0pt}
     \fancyhf{}
     \if@book\else\lfoot{\footnotesize Utskrift: \today, kl. \currenttime}
-    \rfoot{\footnotesize \parbox[b]{65mm}{Skrivet i Jesper \LaSPeX-mall,\\ klart inspirerat utav Grodans \SPeX-mall}}\fi
+    \rfoot{\footnotesize \parbox[b]{65mm}{Skrivet i Jespers \LaSPeX-mall,\\ klart inspirerat utav Grodans \SPeX-mall}}\fi
 }
 
 %%% Character page header and footer
