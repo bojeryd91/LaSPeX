@@ -527,6 +527,13 @@
     \fi%
 }
 
+\newcommand{\centeredContent}[1]{%
+    \hspace{-\vreplik}%
+    \begin{minipage}[t]{\pagetextWidth}%
+    \centering #1%
+    \end{minipage}%
+}
+
 \newlength{\ramskip}
 \newlength{\eftersongrubrik}
 \setlength{\ramskip}{3mm}
