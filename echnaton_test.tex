@@ -1,4 +1,5 @@
-\documentclass[book,with-crop]{laspex}
+%\documentclass[book,with-crop]{laspex}
+\documentclass[book]{laspex}
 
 \newcommand{\spextitel}{Echnaton}
 \newcommand{\ellertitel}{Känd från Tebe}
@@ -14,20 +15,16 @@
 
 \usepackage{blindtext, mwe} % Just for test
 
-%\makeatletter
-%\setlength{\@fptop}{0pt}
-%\setlength{\@fpbot}{0pt plus 1fil}
-%\makeatother
-
 \begin{document}
 
 \begin{onepage}
     \thispagestyle{framsida}
-    Denna sida borde ligga först!
+    
+    \includegraphics[width=\textwidth]{example-image-a}
 \end{onepage}
 
 \begin{framsida}
-    Denna ligger konstigt till vänster när vi använder option \textbf{with-crop}
+    Denna ligger konstigt till vänster när vi använder option \textbf{with-crop}. Varför? \blindtext
 \end{framsida}
 
 
@@ -209,6 +206,16 @@
 \scenanvisning{Amenhotep reser sig värdigt och klappar i händerna. De övriga klär raskt på honom ceremoniklädseln.}
 
 \scen{Öppning av audiensen}
+
+\begin{figure}
+    \centering
+    \fbox{\begin{minipage}{\dimexpr 0.5\textwidth-2\fboxsep-2\fboxrule}
+        \centering
+        \includegraphics[width=\textwidth]{example-image-a}
+    \end{minipage}}
+    \caption{Caption}
+    \label{fig:fig-a}
+\end{figure}
 
 \scenanvisning{Chabba kommer in och stöter en marskalksstav i golvet. Entr\'e för Prästen och Prästinnan.}
 

@@ -57,7 +57,7 @@
 \RequirePackage[yyyymmdd]{datetime}
 \RequirePackage[normalem]{ulem}         % Provides styles for instructions
 \RequirePackage[flushmargin]{footmisc}  % Flushes content in page footer etc.
-\RequirePackage{environ, graphicx, afterpage}
+\RequirePackage{environ, graphicx, afterpage, changepage}
 
 \def\@actprint{Act}
 \def\@sceneprint{Scene}
@@ -198,14 +198,14 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Framsidan
-\newenvironment{framsida}{
-    \newpage%
+\NewEnviron{framsida}{%
+    \clearpage%
+    \pagestyle{framsida}
     \if@book%
-        \newgeometry{left=18.5mm,right=18.5mm}%
+        \begin{adjustwidth}{\dimexpr -\vreplik+1cm}{1cm}
     \else%
         \newgeometry{left=1.5in,right=1.5in}%
     \fi
-    \pagestyle{framsida}
     \if@book\bgroup\fi
     \centering
     \if@book%
@@ -227,8 +227,12 @@
         \fi%
         \bigskip\par
     \fi%
-}%
-{\clearpage\setcounter{page}{1}}
+    \BODY%
+    \if@book%
+        \end{adjustwidth}%
+    \fi%
+    \clearpage\setcounter{page}{1}%
+}
 
 %%% Karaktärsidan/rollbeskrivning
 \newenvironment{karaktarsida}{
@@ -504,6 +508,7 @@
         \makeatother
         % Define a float
         \begin{figure}[p]\if@book\hspace{-\vreplik}\fi% 
+            % Use a minipage to ensure the width of the float
             \begin{minipage}[t]{%
                 \if@book%
                     \pagetextWidth%
